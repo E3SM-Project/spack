@@ -164,7 +164,9 @@ class Esmf(MakefilePackage):
         # is used to build the ESMF library.
         if '+mpi' in spec:
             if 'platform=cray' in self.spec:
-                os.environ['ESMF_COMM'] = 'mpi'
+                os.environ['ESMF_COMM'] = 'user'
+                os.environ['ESMF_CXXLINKLIBS'] = '${ATP_POST_LINK_OPTS}'
+                os.environ['ESMF_F90LINKLIBS'] = '${ATP_POST_LINK_OPTS}'
             elif '^mvapich2' in spec:
                 os.environ['ESMF_COMM'] = 'mvapich2'
             elif '^mpich' in spec:
