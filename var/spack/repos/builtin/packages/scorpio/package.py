@@ -7,30 +7,55 @@ from spack import *
 
 
 class Scorpio(CMakePackage):
-    """SCORPIO Scalable Parallel I/O module for Environmental Management Applications
+    """Software for Caching Output and Reads for Parallel I/O (SCORPIO),
+    derived from the Parallel IO libraries (PIO), is a high-level Parallel I/O
+    Library for structured grid applications."""
 
-    This library provides software that read/write data sets from/to parallel file
-    systems in an efficient and scalable manner
-    """
+    homepage = "https://github.com/E3SM-Project/scorpio"
+    url      = "https://github.com/E3SM-Project/scorpio/archive/refs/tags/scorpio-v1.2.2.tar.gz"
 
-    homepage = "https://gitlab.com/truchas/tpl-forks/scorpio"
-    git      = "https://gitlab.com/truchas/tpl-forks/scorpio.git"
+    maintainers = ['xylar']
 
-    maintainers = ['pbrady']
+    version('1.2.2', sha256='f944a8b8527b188cf474d9cd26c0aaae5d8a263c245eb67cad92d8dd02ca7bfb')
+    version('1.2.1', sha256='b106843008dd33fed8e2aca0cb5f13733342e398d94a489a0d474dfac8c902cc')
+    version('1.2.0', sha256='db2b8db71fe65c5152c10df255ab45a7f5a8870219fc2034ca29feba02c8167b')
 
-    version('develop', branch='truchas')
+    variant('pnetcdf', default=False, description='enable pnetcdf')
+    variant('timing', default=False, description='enable GPTL timing')
+    variant('internal-timing', default=False,
+            description='gather and print GPL timing stats')
+    variant('tools', default=False, description='enable SCORPIO tools')
+    variant('malloc', default=True,
+            description='use native malloc (instead of bget package)')
 
-    version('2021-12-10',
-            commit='b802f16877a6562ccdbeca8887910d3bd3e25cbb',
-            preferred=True)
-
-    depends_on('cmake@3.16:', type='build')
     depends_on('mpi')
-    depends_on('hdf5@1.10.6: +hl +mpi')
+    depends_on('netcdf-c +mpi', type='link')
+    depends_on('netcdf-fortran', type='link')
+    depends_on('parallel-netcdf', type='link', when='+pnetcdf')
 
     def cmake_args(self):
-        opts = []
-        if self.spec.satisfies('%apple-clang@12:'):
-            opts.append(self.define("CMAKE_C_FLAGS",
-                                    "-Wno-error=implicit-function-declaration"))
-        return opts
+        define = self.define
+        define_from_variant = self.define_from_variant
+        spec = self.spec
+        env['CC'] = spec['mpi'].mpicc
+        env['CXX'] = spec['mpi'].mpicxx
+        env['FC'] = spec['mpi'].mpifc
+        src = self.stage.source_path
+        args = [
+            define('NetCDF_C_PATH', spec['netcdf-c'].prefix),
+            define('NetCDF_Fortran_PATH', spec['netcdf-fortran'].prefix),
+        ]
+        if spec.satisfies('+pnetcdf'):
+            args.extend([
+                define('PnetCDF_C_PATH', spec['parallel-netcdf'].prefix),
+                define('PnetCDF_Fortran_PATH', spec['parallel-netcdf'].prefix),
+            ])
+        args.extend([
+            define_from_variant('WITH_PNETCDF', 'pnetcdf'),
+            define_from_variant('PIO_ENABLE_TIMING', 'timing'),
+            define_from_variant('PIO_ENABLE_INTERNAL_TIMING',
+                                'internal-timing'),
+            define_from_variant('PIO_ENABLE_TOOLS ', 'tools'),
+            define_from_variant('PIO_USE_MALLOC', 'malloc'),
+        ])
+        return args
