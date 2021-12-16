@@ -1,0 +1,61 @@
+From a248097a015b14c7015a3ce23a032f15b5fe7612 Mon Sep 17 00:00:00 2001
+From: jayeshkrishna <jayesh@mcs.anl.gov>
+Date: Wed, 13 Apr 2022 12:31:17 -0500
+Subject: [PATCH] Check timing is enabled before adding flags/libs
+
+Ensure that timing is enabled (PIO_ENABLE_TIMING, set by the user)
+before adding the related compiler flags and libraries.
+
+Without this fix builds that don't enable timings fail (the builds
+of tools, examples and tests are affected)
+---
+ cmake/SPIOUtils.cmake | 36 +++++++++++++++++++-----------------
+ 1 file changed, 19 insertions(+), 17 deletions(-)
+
+diff --git a/cmake/SPIOUtils.cmake b/cmake/SPIOUtils.cmake
+index 6037ef8e39..b1c2314d0c 100644
+--- a/cmake/SPIOUtils.cmake
++++ b/cmake/SPIOUtils.cmake
+@@ -28,23 +28,25 @@ macro (add_spio_executable EXE_NAME IS_C_SRC EXE_LINKER_LANGUAGE)
+   if (NOT ${MPI_HAS_Fortran_MOD})
+     target_compile_definitions (${EXE_NAME} PUBLIC NO_MPIMOD)
+   endif ()
+-  if (GPTL_C_FOUND AND ${IS_C_SRC})
+-    target_include_directories (${EXE_NAME}
+-      PUBLIC ${GPTL_C_INCLUDE_DIRS})
+-    target_link_libraries (${EXE_NAME} PRIVATE ${GPTL_C_LIBRARIES})
+-  elseif (${IS_C_SRC})
+-    target_link_libraries (${EXE_NAME} PRIVATE gptl)
+-  elseif (GPTL_Fortran_Perf_FOUND)
+-    # NOT IS_C_SRC
+-    target_include_directories (${EXE_NAME} PUBLIC ${GPTL_Fortran_Perf_INCLUDE_DIRS})
+-    target_link_libraries (${EXE_NAME} PRIVATE ${GPTL_Fortran_Perf_LIBRARIES})
+-  else ()
+-    # (NOT IS_C_SRC) AND (NOT GPTL_Fortran_Perf_FOUND)
+-    target_link_libraries (${EXE_NAME} PRIVATE gptl)
+-  endif ()
+-  target_compile_definitions (${EXE_NAME} PUBLIC TIMING)
+-  if (PIO_ENABLE_INTERNAL_TIMING)
+-    target_compile_definitions (${EXE_NAME} PUBLIC TIMING_INTERNAL)
++  if (PIO_ENABLE_TIMING)
++    if (GPTL_C_FOUND AND ${IS_C_SRC})
++      target_include_directories (${EXE_NAME}
++        PUBLIC ${GPTL_C_INCLUDE_DIRS})
++      target_link_libraries (${EXE_NAME} PRIVATE ${GPTL_C_LIBRARIES})
++    elseif (${IS_C_SRC})
++      target_link_libraries (${EXE_NAME} PRIVATE gptl)
++    elseif (GPTL_Fortran_Perf_FOUND)
++      # NOT IS_C_SRC
++      target_include_directories (${EXE_NAME} PUBLIC ${GPTL_Fortran_Perf_INCLUDE_DIRS})
++      target_link_libraries (${EXE_NAME} PRIVATE ${GPTL_Fortran_Perf_LIBRARIES})
++    else ()
++      # (NOT IS_C_SRC) AND (NOT GPTL_Fortran_Perf_FOUND)
++      target_link_libraries (${EXE_NAME} PRIVATE gptl)
++    endif ()
++    target_compile_definitions (${EXE_NAME} PUBLIC TIMING)
++    if (PIO_ENABLE_INTERNAL_TIMING)
++      target_compile_definitions (${EXE_NAME} PUBLIC TIMING_INTERNAL)
++    endif ()
+   endif ()
+   if (NOT ("${EXE_LINKER_LANGUAGE}" STREQUAL ""))
+     set_property(TARGET ${EXE_NAME} PROPERTY LINKER_LANGUAGE ${EXE_LINKER_LANGUAGE})
