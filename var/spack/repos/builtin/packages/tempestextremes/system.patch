@@ -1,0 +1,36 @@
+diff -ruN old/mk/system.make new/mk/system.make
+--- old/mk/system.make	2021-05-14 18:21:11.000000000 -0500
++++ new/mk/system.make	2021-12-27 06:14:42.545583133 -0600
+@@ -6,30 +6,8 @@
+ 
+ # Detects the system and includes the system-specific makefile.
+ 
+-UNAME := $(shell uname)
+-
+-# Add some criteria here to
+-ifeq ($(UNAME),Darwin)
+-  SYSTEM= MACOSX
+-  SYSTEM_MAKEFILE= macosx.make
+-else ifeq ($(UNAME),Linux)
+-  ifeq ($(NERSC_HOST),cori)
+-    SYSTEM= CORI
+-    SYSTEM_MAKEFILE= cori.make
+-  endif
+-  ifeq ($(findstring casper,$(HOST)),casper)
+-    SYSTEM= CHEYENNE
+-    SYSTEM_MAKEFILE= cheyenne.make
+-  endif
+-  ifeq ($(findstring cheyenne,$(HOST)),cheyenne)
+-    SYSTEM= CHEYENNE
+-    SYSTEM_MAKEFILE= cheyenne.make
+-  endif
+-  ifeq ($(SYSTEM),)
+-    SYSTEM= DEFAULT
+-    SYSTEM_MAKEFILE= default.make
+-  endif   
+-endif
++SYSTEM= DEFAULT
++SYSTEM_MAKEFILE= default.make
+
+ include $(TEMPESTEXTREMESDIR)/mk/system/$(SYSTEM_MAKEFILE)
+ 
