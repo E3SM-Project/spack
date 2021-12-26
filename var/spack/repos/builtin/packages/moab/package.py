@@ -48,6 +48,7 @@ class Moab(AutotoolsPackage):
     variant("fbigeom", default=False, description="Enable fbigeom interface")
     variant("coupler", default=True, description="Enable mbcoupler tool")
     variant("dagmc", default=False, description="Enable dagmc tool")
+    variant("tempest", default=False, description="Enable mbtempest tool")
 
     variant("debug", default=False, description="enable debug symbols")
     variant("shared", default=False, description="Enables the build of shared libraries")
@@ -57,6 +58,8 @@ class Moab(AutotoolsPackage):
     conflicts("+pnetcdf", when="~mpi")
     conflicts("+parmetis", when="~mpi")
     conflicts("+coupler", when="~mpi")
+    conflicts("+tempest", when="~netcdf")
+    conflicts("+tempest", when="@:5.0.2")
 
     # There are many possible variants for MOAB. Here are examples for
     # two of them:
@@ -82,6 +85,12 @@ class Moab(AutotoolsPackage):
     depends_on("parmetis", when="+parmetis")
     # FIXME it seems that zoltan needs to be built without fortran
     depends_on("zoltan~fortran", when="+zoltan")
+    depends_on("tempestremap@2.1.1", when="@5.3.1+tempest")
+    depends_on("tempestremap@2.1.0", when="@5.3.0+tempest")
+    depends_on("tempestremap@2.0.5", when="@5.2.1+tempest")
+    depends_on("tempestremap@2.0.3", when="@5.2.0+tempest")
+    depends_on("tempestremap@2.0.2", when="@5.1.0+tempest")
+    depends_on("eigen", when="+tempest")
 
     patch("tools-492.patch", when="@4.9.2")
 
@@ -196,6 +205,15 @@ class Moab(AutotoolsPackage):
             options.append("--disable-fortran")
         else:
             options.append("--enable-fortran")
+            
+        if "+tempest" in spec:
+            options.append("--with-tempestremap={}".format(
+                spec["tempestremap"].prefix))
+            options.append("--with-eigen3={}/include/eigen3".format(
+                spec["eigen"].prefix))
+        else:
+            options.append("--without-tempestremap")
+            options.append("--without-eigen3")
 
         return options
 
