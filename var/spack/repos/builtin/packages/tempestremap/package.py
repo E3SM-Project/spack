@@ -20,6 +20,8 @@ class Tempestremap(AutotoolsPackage):
 
     maintainers = ['iulian787', 'vijaysm', 'paullric']
 
+    version('2.1.1', sha256='f5ea21f82b358ba127550fc1f49e701cba0379d22ce030c274135109f678b980')
+    version('2.1.0', sha256='2dfae7d81d685eafd36da3b4a989676c0b2800b91e4fdac3e5ceb7a20eff99f2')
     version('2.0.5', sha256='8618f5cbde450922efa1d77e67b062c557788b0cf4304adca30237afe3ade887')
     version('2.0.4', sha256='8349eeb604e97b13d2ecde8626a69e579a7af70ad0e8a6925a8bb4306a4963a4')
     version('2.0.3', sha256='b4578c2cb101ba091a10dc914e15ac968257f5db27ca78bc9fb5dbd70bce191f')
