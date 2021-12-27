@@ -16,8 +16,16 @@ class Nco(AutotoolsPackage):
     version("5.1.6", sha256="6b217156cb14f670c80d5de5c5b88905cdb281f6e239e83397f14eaf3d0b390b")
     version("5.1.5", sha256="6a35c2d45744b427a424896d32066e483c0a49a46dba83ba90f2cc5ed3dca869")
     version("5.1.4", sha256="4b1ec67b795b985990620be7b7422ecae6da77f5ec93e4407b799f0220dffc88")
+    version("5.1.3", sha256="f6766627dab3f067c88f2cd713e3058c324ea4f900fabf9755bdd8918c32de7b")
+    version("5.1.2", sha256="1b86303fc55b5a52b52923285a5e709de82cbc1630e68b64dce434b681e4100a")
+    version("5.1.1", sha256="6e004cfaa8e3188f543d2a31f7fdd7b2d2a59b6c7fea44c41ad13232bbe1c8d6")
     version("5.1.0", sha256="6f0ba812e0684881a85ebf3385117761cffbba36ba842889cc96f111157f89c2")
+    version("5.0.7", sha256="6ddb397e7de4a7876e7d84ea82d4ee716cfd60ad8ee50ef49716945c505cbc1d")
     version("5.0.6", sha256="d4c74e0268af94bdddcb0c77189830992f61c04147c23669b66470f1a8595d60")
+    version("5.0.5", sha256="765af0e3194c364504251c19d3362038730752fc5e741078ecdd875de45dbc55")
+    version("5.0.4", sha256="91c9d191db8c7132489d86727b195c04577f034adf168f9d341ec63b55ea4353")
+    version("5.0.3", sha256="61b45cdfbb772718f00d40da1a4ce268201fd00a61ebb9515460b8dda8557bdb")
+    version("5.0.2", sha256="7486e7e03da4caf2736e8eb3d2299a686fb58dbcc04391ce073e0a8c2baf80d6")
     version("5.0.1", sha256="37d11ffe582aa0ee89f77a7b9a176b41e41900e9ab709e780ec0caf52ad60c4b")
     version("4.9.3", sha256="eade5b79f3814b11ae3f52c34159567e76a73f05f0ab141eccaac68f0ca94aee")
     version("4.9.2", sha256="1a98c37c946c00232fa7319d00d1d80f77603adda7c9239d10d68a8a3545a4d5")
@@ -39,6 +47,7 @@ class Nco(AutotoolsPackage):
     patch("NUL-0-NULL.patch", when="@:4.6.7")
 
     variant("doc", default=False, description="Build/install NCO TexInfo-based documentation")
+    variant("openmp", default=True, description="Include OpenMP support")
 
     # See "Compilation Requirements" at:
     # http://nco.sourceforge.net/#bld
@@ -55,7 +64,9 @@ class Nco(AutotoolsPackage):
 
     def configure_args(self):
         spec = self.spec
-        return ["--{0}-doc".format("enable" if "+doc" in spec else "disable")]
+        return ["--{0}-doc".format("enable" if "+doc" in spec else "disable"),
+                "--{0}-openmp".format("enable" if "+openmp" in spec else
+                                      "disable")]
 
     def setup_build_environment(self, env):
         spec = self.spec
