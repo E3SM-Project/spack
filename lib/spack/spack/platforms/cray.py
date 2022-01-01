@@ -6,6 +6,7 @@ import os
 import os.path
 import platform
 import re
+import socket
 
 import archspec.cpu
 
@@ -163,6 +164,9 @@ class Cray(Platform):
         craype_type, craype_version = cls.craype_type_and_version()
         if craype_type == "EX" and craype_version >= spack.version.Version("21.10"):
             return False
+        # Blues is not a cray machine but erroneously has cray mods in path
+        if "blueslogin" in socket.gethostname():
+             return False
         return "opt/cray" in os.environ.get("MODULEPATH", "")
 
     def _default_target_from_env(self):
