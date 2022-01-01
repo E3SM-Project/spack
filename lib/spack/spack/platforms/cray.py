@@ -6,6 +6,7 @@ import os
 import os.path
 import platform
 import re
+import socket
 
 import archspec.cpu
 
@@ -127,6 +128,9 @@ class Cray(Platform):
         and other components of the Cray programming environment are
         irrelevant without module support.
         """
+        # Blues is not a cray machine but erroneously has cray mods in path
+        if 'blueslogin' in socket.gethostname():
+             return False
         return 'opt/cray' in os.environ.get('MODULEPATH', '')
 
     def _default_target_from_env(self):
