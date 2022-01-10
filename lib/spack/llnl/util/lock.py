@@ -357,8 +357,10 @@ class Lock(object):
         try:
             os.makedirs(parent)
         except OSError as e:
-            # makedirs can fail when diretory already exists.
-            if not (e.errno == errno.EEXIST and os.path.isdir(parent) or
+            # makedirs can fail when directory already exists, possibly because
+            # of permission issues
+            if not (((e.errno in [errno.EEXIST, errno.EACCES, errno.EPERM]) and
+                     os.path.isdir(parent)) or
                     e.errno == errno.EISDIR):
                 raise
         return parent
