@@ -479,6 +479,7 @@ class Trilinos(CMakePackage, CudaPackage):
             define_trilinos_enable('NOX'),
             define_trilinos_enable('Pamgen', False),
             define_trilinos_enable('Panzer', False),
+            define_trilinos_enable('PanzerDofMgr'),
             define_trilinos_enable('Pike', False),
             define_trilinos_enable('Piro'),
             define_trilinos_enable('Phalanx'),
