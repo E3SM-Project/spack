@@ -46,8 +46,9 @@ class Albany(CMakePackage):
     depends_on('mpi')
     #depends_on('trilinos@develop~superlu-dist+exodus+chaco+isorropia+tempus+rythmos+teko+intrepid+intrepid2+minitensor+phalanx+pnetcdf+nox+piro+rol+shards+stk+amesos2~hypre+ifpack2~mumps~suite-sparse gotype=long_long', when='~sandybridge')
     #depends_on('trilinos@develop~superlu-dist+exodus+chaco+isorropia+tempus+rythmos+teko+intrepid+intrepid2+minitensor+phalanx+pnetcdf+nox+piro+rol+shards+stk+amesos2~hypre+ifpack2~mumps~suite-sparse+sandybridge gotype=long_long', when='+sandybridge')
-    depends_on('trilinos@develop~superlu-dist+exodus+chaco+isorropia+tempus+rythmos+teko+intrepid+intrepid2+minitensor+phalanx+nox+piro+rol+shards+stk+amesos2~hypre+ifpack2~mumps~suite-sparse gotype=long_long')
+    depends_on('trilinos@develop~superlu-dist+exodus+chaco+isorropia+tempus+rythmos+teko+intrepid+intrepid2+minitensor+phalanx+nox+piro+rol+shards+stk+amesos2~hypre+ifpack2~mumps~suite-sparse+panzer gotype=long_long')
 
+    #depends_on('trilinos~superlu-dist+exodus+chaco+isorropia+tempus+rythmos+teko+intrepid+intrepid2+minitensor+phalanx+nox+piro+rol+shards+stk+amesos2~hypre+ifpack2~mumps~suite-sparse gotype=long_long')
     def cmake_args(self):
         spec = self.spec
         trilinos_dir = spec['trilinos'].prefix
