@@ -16,7 +16,8 @@ from spack.operating_systems.mac_os import macos_version
 # https://github.com/Homebrew/homebrew-science/blob/master/trilinos.rb and some
 # relevant documentation/examples:
 # https://github.com/trilinos/Trilinos/issues/175
-
+# This version of Trilinos has settings required for the Albany multi-physics
+# code, which are slightly different than the main trilinos spackage.
 
 class TrilinosForAlbany(CMakePackage):
     """The Trilinos Project is an effort to develop algorithms and enabling
@@ -28,7 +29,7 @@ class TrilinosForAlbany(CMakePackage):
     url      = "https://github.com/trilinos/Trilinos/archive/trilinos-release-12-12-1.tar.gz"
     git      = "https://github.com/trilinos/Trilinos.git"
 
-    maintainers = ['aprokop', 'keitat']
+    maintainers = ['ikalash']
 
     # ###################### Versions ##########################
 
