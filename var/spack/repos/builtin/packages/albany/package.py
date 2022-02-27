@@ -37,6 +37,8 @@ class Albany(CMakePackage):
             description='Enable 64BIT')
     variant('sfad',          default=False,
             description='Enable SFad build')
+    variant('sandybridge', default=False,
+            description='Compile Trilinos used by Albany for Sandybridge architecture')
     variant('mpas',          default=False,
             description='Enable MPAS interface in build')
     variant('sfadsize', default='4', values=('4', '6', '8', '12', '24'), multi=False,
@@ -44,14 +46,17 @@ class Albany(CMakePackage):
 
     # Add dependencies
     depends_on('mpi')
-    #depends_on('trilinos@develop~superlu-dist+exodus+chaco+isorropia+tempus+rythmos+teko+intrepid+intrepid2+minitensor+phalanx+pnetcdf+nox+piro+rol+shards+stk+amesos2~hypre+ifpack2~mumps~suite-sparse gotype=long_long', when='~sandybridge')
-    #depends_on('trilinos@develop~superlu-dist+exodus+chaco+isorropia+tempus+rythmos+teko+intrepid+intrepid2+minitensor+phalanx+pnetcdf+nox+piro+rol+shards+stk+amesos2~hypre+ifpack2~mumps~suite-sparse+sandybridge gotype=long_long', when='+sandybridge')
-    depends_on('trilinos@develop~superlu-dist+exodus+chaco+isorropia+tempus+rythmos+teko+intrepid+intrepid2+minitensor+phalanx+nox+piro+rol+shards+stk+amesos2~hypre+ifpack2~mumps~suite-sparse+panzer gotype=long_long')
+    depends_on('trilinos-for-albany@develop~superlu-dist+exodus+chaco+isorropia+tempus+rythmos+teko+intrepid+intrepid2+minitensor+phalanx+pnetcdf+nox+piro+rol+shards+stk+amesos2~hypre+ifpack2~mumps~suite-sparse gotype=long_long', when='~sandybridge')
+    depends_on('trilinos-for-albany@develop~superlu-dist+exodus+chaco+isorropia+tempus+rythmos+teko+intrepid+intrepid2+minitensor+phalanx+pnetcdf+nox+piro+rol+shards+stk+amesos2~hypre+ifpack2~mumps~suite-sparse+sandybridge gotype=long_long', when='+sandybridge')
 
-    #depends_on('trilinos~superlu-dist+exodus+chaco+isorropia+tempus+rythmos+teko+intrepid+intrepid2+minitensor+phalanx+nox+piro+rol+shards+stk+amesos2~hypre+ifpack2~mumps~suite-sparse gotype=long_long')
+    #IKT, 2/27/2022: comment the above lines and uncomment the followint to use trilinos, instead of 
+    #trilinos-for-albany.  The code should build but will not run (there are seg faults at the end of 
+    #each test that is run, after time monitor output).  
+    #depends_on('trilinos~superlu-dist+exodus+chaco+isorropia+tempus+rythmos+teko+intrepid+intrepid2+minitensor+phalanx+nox+piro+rol+shards+stk+amesos2~hypre+ifpack2~mumps~suite-sparse+panzer gotype=long_long')
     def cmake_args(self):
         spec = self.spec
-        trilinos_dir = spec['trilinos'].prefix
+        #trilinos_dir = spec['trilinos'].prefix
+        trilinos_dir = spec['trilinos-for-albany'].prefix
         options = []
 
         options.extend([
