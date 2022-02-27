@@ -64,8 +64,6 @@ class Albany(CMakePackage):
                            'ON' if '+landice' in spec else 'OFF'),
                        '-DENABLE_UNIT_TESTS:BOOL=%s' % (
                            'ON' if '+unit_tests' in spec else 'OFF'),
-                       '-DENABLE_DEBUGGING:BOOL=%s' % (
-                           'ON' if '+debug' in spec else 'OFF'),
                        '-DENABLE_CHECK_FPE:BOOL=%s' % (
                            'ON' if '+fpe' in spec else 'OFF'),
                        '-DENABLE_ALBANY_CI:BOOL=%s' % (
@@ -84,4 +82,13 @@ class Albany(CMakePackage):
           options.extend([
             '-DALBANY_SFAD_SIZE=%d' % int(spec.variants['sfadsize'].value)
                        ])
+        if '+debug' in spec: 
+          options.extend([
+            '-DCMAKE_BUILD_TYPE:STRING=DEBUG'
+                       ])
+        else:
+          options.extend([
+            '-DCMAKE_BUILD_TYPE:STRING=RELEASE'
+                       ])
+
         return options
