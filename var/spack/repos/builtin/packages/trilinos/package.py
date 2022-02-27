@@ -111,6 +111,8 @@ class Trilinos(CMakePackage, CudaPackage):
     variant('minitensor',   default=False, description='Compile with MiniTensor')
     variant('muelu',        default=True, description='Compile with Muelu')
     variant('nox',          default=False, description='Compile with NOX')
+    variant('panzer',       default=False, description='Compile with Panzer')
+    variant('panzerdofmgr', default=True, description='Compile with PanzerDofMgr')
     variant('piro',         default=False, description='Compile with Piro')
     variant('phalanx',      default=False, description='Compile with Phalanx')
     variant('rol',          default=False, description='Compile with ROL')
@@ -478,8 +480,7 @@ class Trilinos(CMakePackage, CudaPackage):
             define_trilinos_enable('MueLu'),
             define_trilinos_enable('NOX'),
             define_trilinos_enable('Pamgen', False),
-            define_trilinos_enable('Panzer', False),
-            define_trilinos_enable('PanzerDofMgr'),
+            #define_trilinos_enable('Panzer'),
             define_trilinos_enable('Pike', False),
             define_trilinos_enable('Piro'),
             define_trilinos_enable('Phalanx'),
@@ -659,6 +660,16 @@ class Trilinos(CMakePackage, CudaPackage):
             define('Teuchos_ENABLE_COMPLEX', complex_s),
             define('Teuchos_ENABLE_FLOAT', float_s),
         ])
+
+        if '+panzerdofmgr' in spec:
+            options.extend([
+                define('Trilinos_ENABLE_PanzerDofMgr', True),
+            ])
+
+        if '+panzer' in spec:
+            options.extend([
+                define('Trilinos_ENABLE_Panzer', True),
+            ])
 
         if '+tpetra +explicit_template_instantiation' in spec:
             options.append(define_from_variant('Tpetra_INST_OPENMP', 'openmp'))
