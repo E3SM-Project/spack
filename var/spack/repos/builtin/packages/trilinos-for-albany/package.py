@@ -327,9 +327,8 @@ class TrilinosForAlbany(CMakePackage):
 
     # MPI related dependencies
     depends_on('mpi')
-    depends_on('netcdf-c+mpi', when="~pnetcdf")
-    depends_on('netcdf-c+mpi+parallel-netcdf', when="+pnetcdf@master,12.12.1:")
-    depends_on('parallel-netcdf', when="+pnetcdf@master,12.12.1:")
+    depends_on('netcdf-c+mpi')
+    depends_on('parallel-netcdf', when="@12.12.1:+pnetcdf")
     depends_on('parmetis', when='+metis')
     depends_on('cgns', when='+cgns')
     depends_on('adios2', when='+adios2')
