@@ -394,6 +394,11 @@ class Boost(Package):
         working_dir="tools/build",
     )
 
+    # Fix static linking of b2 with Intel compilers
+    patch("build-intel-static-1.78.0.patch",
+          when="@1.78.0",
+          working_dir="tools/build")
+
     # Fix issues with PTHREAD_STACK_MIN not being a DEFINED constant in newer glibc
     # See https://github.com/spack/spack/issues/28273
     patch("pthread-stack-min-fix.patch", when="@1.69.0:1.72.0")
