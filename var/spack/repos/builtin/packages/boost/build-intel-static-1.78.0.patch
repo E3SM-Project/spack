@@ -1,0 +1,14 @@
+diff -ruN build/src/engine/build.sh build-patch/src/engine/build.sh
+--- build/src/engine/build.sh	2022-03-04 11:09:07.907995739 +0100
++++ build-patch/src/engine/build.sh	2022-03-04 11:10:19.450714230 +0100
+@@ -329,8 +329,8 @@
+ 
+     intel-*)
+         CXX_VERSION_OPT=${CXX_VERSION_OPT:---version}
+-        B2_CXXFLAGS_RELEASE="-O3 -s -static"
+-        B2_CXXFLAGS_DEBUG="-O0 -g -p -static"
++        B2_CXXFLAGS_RELEASE="-O3 -static-intel"
++        B2_CXXFLAGS_DEBUG="-O0 -g -p -static-intel"
+     ;;
+ 
+     vacpp)
