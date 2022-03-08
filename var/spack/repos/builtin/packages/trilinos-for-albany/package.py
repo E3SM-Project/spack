@@ -494,16 +494,16 @@ class TrilinosForAlbany(CMakePackage):
 
         if '+stk' in spec:
             options.extend([
-                '-DTrilinos_ENABLE_STK:BOOL=ON'
-                '-DTrilinos_ENABLE_STKExprEval:BOOL=ON'
-                '-DSTK_ENABLE_TESTS:BOOL=OFF'
-                '-DSTK_ENABLE_EXAMPLES:BOOL=OFF'
-                '-DSTKExprEval_ENABLE_TESTS:BOOL=OFF'
+                '-DTrilinos_ENABLE_STK:BOOL=ON',
+                '-DTrilinos_ENABLE_STKExprEval:BOOL=ON',
+                '-DSTK_ENABLE_TESTS:BOOL=OFF',
+                '-DSTK_ENABLE_EXAMPLES:BOOL=OFF',
+                '-DSTKExprEval_ENABLE_TESTS:BOOL=OFF',
                 '-DSTKExprEval_ENABLE_EXAMPLES:BOOL=OFF'
             ])
         else:
             options.extend([
-                '-DTrilinos_ENABLE_STK:BOOL=OFF'
+                '-DTrilinos_ENABLE_STK:BOOL=OFF',
                 '-DTrilinos_ENABLE_STKExprEval:BOOL=OFF'
             ])
 
@@ -541,7 +541,7 @@ class TrilinosForAlbany(CMakePackage):
 
         if '+chaco' in spec:
             options.extend([
-                '-DTrilinos_ENABLE_SEACAS:BOOL=ON'
+                '-DTrilinos_ENABLE_SEACAS:BOOL=ON',
                 '-DTrilinos_ENABLE_SEACASChaco:BOOL=ON'
             ])
         else:
