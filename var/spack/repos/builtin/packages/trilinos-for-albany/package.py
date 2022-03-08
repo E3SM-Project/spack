@@ -496,10 +496,15 @@ class TrilinosForAlbany(CMakePackage):
             options.extend([
                 '-DTrilinos_ENABLE_STK:BOOL=ON'
                 '-DTrilinos_ENABLE_STKExprEval:BOOL=ON'
+                '-DSTK_ENABLE_TESTS:BOOL=OFF'
+                '-DSTK_ENABLE_EXAMPLES:BOOL=OFF'
+                '-DSTKExprEval_ENABLE_TESTS:BOOL=OFF'
+                '-DSTKExprEval_ENABLE_EXAMPLES:BOOL=OFF'
             ])
         else:
             options.extend([
                 '-DTrilinos_ENABLE_STK:BOOL=OFF'
+                '-DTrilinos_ENABLE_STKExprEval:BOOL=OFF'
             ])
 
         if '+dtk' in spec:
