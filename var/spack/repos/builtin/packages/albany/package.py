@@ -78,7 +78,7 @@ class Albany(CMakePackage):
                            "ON" if "+64bit" in spec else "OFF"),
                        "-DENABLE_FAD_TYPE:STRING=%s" % (
                            "SFad" if "+sfad" in spec else "DFad"),
-                       "-DENABLE_MPAS_INTERFACE:=%s" % (
+                       "-DENABLE_MPAS_INTERFACE:BOOL=%s" % (
                            "ON" if "mpas" in spec else "OFF")
                        ])
 
