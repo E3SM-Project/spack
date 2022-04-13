@@ -30,6 +30,7 @@ class Scorpio(CMakePackage):
     variant('malloc', default=True,
             description='use native malloc (instead of bget package)')
 
+    depends_on('gptl', when='+timing')
     depends_on('mpi')
     depends_on('netcdf-c +mpi', type='link')
     depends_on('netcdf-fortran', type='link')
