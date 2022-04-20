@@ -36,6 +36,9 @@ class Scorpio(CMakePackage):
     depends_on('netcdf-fortran', type='link')
     depends_on('parallel-netcdf', type='link', when='+pnetcdf')
 
+    patch('6f1ecba7774293d3db34226b09339b32a28f24a3.patch', when='@1.3.2')
+    patch('a248097a015b14c7015a3ce23a032f15b5fe7612.patch', when='@1.3.2')
+
     def cmake_args(self):
         define = self.define
         define_from_variant = self.define_from_variant
