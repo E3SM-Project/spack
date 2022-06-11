@@ -22,10 +22,11 @@ class Tempestextremes(MakefilePackage):
     """
 
     homepage = "https://github.com/ClimateGlobalChange/tempestextremes"
-    url = "https://github.com/ClimateGlobalChange/tempestextremes/archive/2.2.tar.gz"
+    url = "https://github.com/ClimateGlobalChange/tempestextremes/archive/v2.2.1.tar.gz"
 
     maintainers = ['xylar', 'paullric']
 
+    version('2.2.1', sha256='bd3feeb187587d95a6fb94314eecd9c72c9349c6e1afac347edafe7b4d450a93')
     version('2.2', sha256='d8fdc4a2c1b8794cb1699739e5d0119f0ed5a4eb5ab6212cfbc0215ec6110bc5')
     version('2.1', sha256='fc31940d855297964fa091ed5da0f96c28e8a25fd237dfa660357a054600ab70')
     version('2.0', sha256='121ed3184f51b2830a00ca37da5848553763df38afb9b970125a712440f1ead6')
