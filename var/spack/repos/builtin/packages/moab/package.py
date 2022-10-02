@@ -24,6 +24,7 @@ class Moab(AutotoolsPackage):
 
     version('develop', branch='develop')
     version('master', branch='master')
+    version('5.4.0', sha256='a30d2a1911fbf214ae0175b0856e0475c0077dc51ea5914c850d631155a72952')
     version('5.3.1', sha256='2404fab2d84f87be72b57cfef5ea237bfa444aaca059e66a158f22134956fe54')
     version('5.3.0', sha256='51c31ccbcaa76d9658a44452b9a39f076b795b27a1c9f408fc3d0eea97e032ef')
     version('5.2.1', sha256='60d31762be3f0e5c89416c764e844ec88dac294169b59a5ead3c316b50f85c29')
@@ -209,7 +210,7 @@ class Moab(AutotoolsPackage):
             options.append('--disable-fortran')
         else:
             options.append('--enable-fortran')
-            
+
         if '+tempest' in spec:
             options.append('--with-tempestremap={}'.format(
                 spec['tempestremap'].prefix))
