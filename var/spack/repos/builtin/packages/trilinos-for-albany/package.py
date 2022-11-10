@@ -369,6 +369,10 @@ class TrilinosForAlbany(CMakePackage):
         url = "https://github.com/trilinos/Trilinos/archive/trilinos-release-{0}.tar.gz"
         return url.format(version.dashed)
 
+    def setup_run_environment(self, env):
+        if "+exodus" in self.spec:
+            env.prepend_path("PYTHONPATH", self.prefix.lib)
+
     def cmake_args(self):
         spec = self.spec
 
