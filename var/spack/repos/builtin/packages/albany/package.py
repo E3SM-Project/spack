@@ -43,11 +43,20 @@ class Albany(CMakePackage):
             description="Enable MPAS interface in build")
     variant("sfadsize", default="4", values=("4", "6", "8", "12", "24"), multi=False,
             description="SFad size")
+    variant("py",          default=False,
+            description="Enable PyAlbany interface in build")
 
     # Add dependencies
     depends_on("mpi")
     depends_on("trilinos-for-albany@develop~superlu-dist+exodus+chaco+isorropia+tempus+rythmos+teko+intrepid+intrepid2+minitensor+phalanx+pnetcdf+nox+piro+rol+shards+stk+amesos2~hypre+ifpack2~mumps~suite-sparse gotype=long_long", when="~sandybridge")
     depends_on("trilinos-for-albany@develop~superlu-dist+exodus+chaco+isorropia+tempus+rythmos+teko+intrepid+intrepid2+minitensor+phalanx+pnetcdf+nox+piro+rol+shards+stk+amesos2~hypre+ifpack2~mumps~suite-sparse+sandybridge gotype=long_long", when="+sandybridge")
+
+    extends("python",             when="+py")
+
+    depends_on("py-pybind11",     when="+py")
+    depends_on("py-numpy",        when="+py")
+    depends_on("py-mpi4py",       when="+py")
+    depends_on("py-scipy",        when="+py")
 
     #IKT, 2/27/2022: comment the above lines and uncomment the followint to use trilinos, instead of 
     #trilinos-for-albany.  The code should build but will not run (there are seg faults at the end of 
@@ -79,7 +88,9 @@ class Albany(CMakePackage):
                        "-DENABLE_FAD_TYPE:STRING=%s" % (
                            "SFad" if "+sfad" in spec else "DFad"),
                        "-DENABLE_MPAS_INTERFACE:BOOL=%s" % (
-                           "ON" if "+mpas" in spec else "OFF")
+                           "ON" if "+mpas" in spec else "OFF"),
+                       "-DENABLE_ALBANY_PYTHON:BOOL=%s" % (
+                           "ON" if "+py" in spec else "OFF")
                        ])
 
         if "+sfad" in spec:
