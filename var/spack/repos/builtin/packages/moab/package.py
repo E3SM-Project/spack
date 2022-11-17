@@ -24,6 +24,7 @@ class Moab(AutotoolsPackage):
 
     version("develop", branch="develop")
     version("master", branch="master")
+    version("5.4.1-RC1", sha256="363633280eb713ca30e44640a616fbb6c9b0a5849b821e51b366d58bd2e97cdb")
     version("5.4.0", sha256="a30d2a1911fbf214ae0175b0856e0475c0077dc51ea5914c850d631155a72952")
     version("5.3.0", sha256="51c31ccbcaa76d9658a44452b9a39f076b795b27a1c9f408fc3d0eea97e032ef")
     version("5.2.1", sha256="60d31762be3f0e5c89416c764e844ec88dac294169b59a5ead3c316b50f85c29")
@@ -86,6 +87,7 @@ class Moab(AutotoolsPackage):
     depends_on("parmetis", when="+parmetis")
     # FIXME it seems that zoltan needs to be built without fortran
     depends_on("zoltan~fortran", when="+zoltan")
+    depends_on("tempestremap@2.1.6", when="@5.4.1-RC1+tempest")
     depends_on("tempestremap@2.1.6", when="@5.4.0+tempest")
     depends_on("tempestremap@2.1.1", when="@5.3.1+tempest")
     depends_on("tempestremap@2.1.0", when="@5.3.0+tempest")
