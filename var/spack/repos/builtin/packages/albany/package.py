@@ -27,6 +27,8 @@ class Albany(CMakePackage):
             description="Enable CHECK_FPE")
     variant("landice",          default=True,
             description="Enable LANDICE")
+    variant('cxx17',          default=False,
+            description='Compile with C++17')
     variant("unit_tests",          default=True,
             description="Enable_UNIT_TESTS")
     variant("confgui",          default=True,
@@ -48,8 +50,10 @@ class Albany(CMakePackage):
 
     # Add dependencies
     depends_on("mpi")
-    depends_on("trilinos-for-albany@develop~superlu-dist+exodus+chaco+isorropia+tempus+rythmos+teko+intrepid+intrepid2+minitensor+phalanx+pnetcdf+nox+piro+rol+shards+stk+amesos2~hypre+ifpack2~mumps~suite-sparse gotype=long_long", when="~sandybridge")
-    depends_on("trilinos-for-albany@develop~superlu-dist+exodus+chaco+isorropia+tempus+rythmos+teko+intrepid+intrepid2+minitensor+phalanx+pnetcdf+nox+piro+rol+shards+stk+amesos2~hypre+ifpack2~mumps~suite-sparse+sandybridge gotype=long_long", when="+sandybridge")
+    depends_on("trilinos-for-albany@develop~superlu-dist+exodus+chaco+isorropia+tempus+rythmos+teko+intrepid+intrepid2+minitensor+phalanx+pnetcdf+nox+piro+rol+shards+stk+amesos2~hypre+ifpack2~mumps~cxx17~suite-sparse gotype=long_long", when="~sandybridge~cxx17")
+    depends_on("trilinos-for-albany@develop~superlu-dist+exodus+chaco+isorropia+tempus+rythmos+teko+intrepid+intrepid2+minitensor+phalanx+pnetcdf+nox+piro+rol+shards+stk+amesos2~hypre+ifpack2~mumps+cxx17~suite-sparse gotype=long_long", when="~sandybridge+cxx17")
+    depends_on("trilinos-for-albany@develop~superlu-dist+exodus+chaco+isorropia+tempus+rythmos+teko+intrepid+intrepid2+minitensor+phalanx+pnetcdf+nox+piro+rol+shards+stk+amesos2~hypre+ifpack2~mumps~suite-sparse~cxx17+sandybridge gotype=long_long", when="+sandybridge~cxx17")
+    depends_on("trilinos-for-albany@develop~superlu-dist+exodus+chaco+isorropia+tempus+rythmos+teko+intrepid+intrepid2+minitensor+phalanx+pnetcdf+nox+piro+rol+shards+stk+amesos2~hypre+ifpack2~mumps~suite-sparse+cxx17+sandybridge gotype=long_long", when="+sandybridge+cxx17")
 
     extends("python",             when="+py")
 
