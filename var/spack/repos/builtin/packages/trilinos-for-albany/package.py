@@ -188,6 +188,8 @@ class TrilinosForAlbany(CMakePackage):
             description='Compile with Tempus')
     variant('teuchos',      default=True,
             description='Compile with Teuchos')
+    variant('thyra',      default=True,
+            description='Compile with Thyra')
     variant('tpetra',       default=True,
             description='Compile with Tpetra')
     variant('zoltan',       default=True,
@@ -487,6 +489,10 @@ class TrilinosForAlbany(CMakePackage):
                 'ON' if '+tempus' in spec else 'OFF'),
             '-DTrilinos_ENABLE_Teuchos:BOOL=%s' % (
                 'ON' if '+teuchos' in spec else 'OFF'),
+            '-DTrilinos_ENABLE_Thyra:BOOL=%s' % (
+                'ON' if '+thyra' in spec else 'OFF'),
+            '-DTrilinos_ENABLE_ThyraEpetraExtAdapters:BOOL=%s' % (
+                'ON' if '+thyra+epetraext' in spec else 'OFF'),
             '-DTrilinos_ENABLE_Tpetra:BOOL=%s' % (
                 'ON' if '+tpetra' in spec else 'OFF'),
             '-DTrilinos_ENABLE_Zoltan:BOOL=%s' % (
