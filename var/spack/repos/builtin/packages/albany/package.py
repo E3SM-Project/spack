@@ -47,13 +47,20 @@ class Albany(CMakePackage):
             description="SFad size")
     variant("py",          default=False,
             description="Enable PyAlbany interface in build")
+    variant("epetra",          default=True,
+            description="Enable Epetra in build")
 
     # Add dependencies
     depends_on("mpi")
-    depends_on("trilinos-for-albany@develop~superlu-dist+exodus+chaco+isorropia+tempus+rythmos+teko+intrepid+intrepid2+minitensor+phalanx+pnetcdf+nox+piro+rol+shards+stk+amesos2~hypre+ifpack2~mumps~cxx17~suite-sparse gotype=long_long", when="~sandybridge~cxx17")
-    depends_on("trilinos-for-albany@develop~superlu-dist+exodus+chaco+isorropia+tempus+rythmos+teko+intrepid+intrepid2+minitensor+phalanx+pnetcdf+nox+piro+rol+shards+stk+amesos2~hypre+ifpack2~mumps+cxx17~suite-sparse gotype=long_long", when="~sandybridge+cxx17")
-    depends_on("trilinos-for-albany@develop~superlu-dist+exodus+chaco+isorropia+tempus+rythmos+teko+intrepid+intrepid2+minitensor+phalanx+pnetcdf+nox+piro+rol+shards+stk+amesos2~hypre+ifpack2~mumps~suite-sparse~cxx17+sandybridge gotype=long_long", when="+sandybridge~cxx17")
-    depends_on("trilinos-for-albany@develop~superlu-dist+exodus+chaco+isorropia+tempus+rythmos+teko+intrepid+intrepid2+minitensor+phalanx+pnetcdf+nox+piro+rol+shards+stk+amesos2~hypre+ifpack2~mumps~suite-sparse+cxx17+sandybridge gotype=long_long", when="+sandybridge+cxx17")
+    depends_on("trilinos-for-albany@develop~superlu-dist+exodus+chaco+isorropia+tempus+rythmos+teko+intrepid+intrepid2+minitensor+phalanx+pnetcdf+nox+piro+rol+shards+stk+amesos2~hypre+ifpack2~mumps~cxx17~suite-sparse+ml gotype=long_long", when="~sandybridge~cxx17+epetra")
+    depends_on("trilinos-for-albany@develop~superlu-dist+exodus+chaco+isorropia+tempus+rythmos+teko+intrepid+intrepid2+minitensor+phalanx+pnetcdf+nox+piro+rol+shards+stk+amesos2~hypre+ifpack2~mumps+cxx17~suite-sparse+ml gotype=long_long", when="~sandybridge+cxx17+epetra")
+    depends_on("trilinos-for-albany@develop~superlu-dist+exodus+chaco+isorropia+tempus+rythmos+teko+intrepid+intrepid2+minitensor+phalanx+pnetcdf+nox+piro+rol+shards+stk+amesos2~hypre+ifpack2~mumps~suite-sparse~cxx17+sandybridge+ml gotype=long_long", when="+sandybridge~cxx17+epetra")
+    depends_on("trilinos-for-albany@develop~superlu-dist+exodus+chaco+isorropia+tempus+rythmos+teko+intrepid+intrepid2+minitensor+phalanx+pnetcdf+nox+piro+rol+shards+stk+amesos2~hypre+ifpack2~mumps~suite-sparse+cxx17+sandybridge+ml gotype=long_long", when="+sandybridge+cxx17+epetra")
+
+    depends_on("trilinos-for-albany@develop~superlu-dist+exodus+chaco~isorropia+tempus~teko~intrepid+intrepid2+minitensor+phalanx+pnetcdf+nox+piro+rol+shards+stk+amesos2~amesos~hypre+ifpack2~mumps~cxx17~suite-sparse~epetra~ifpack~ml+muelu~aztec gotype=long_long", when="~sandybridge~cxx17~epetra")
+    depends_on("trilinos-for-albany@develop~superlu-dist+exodus+chaco~isorropia+tempus~teko~intrepid+intrepid2+minitensor+phalanx+pnetcdf+nox+piro+rol+shards+stk+amesos2~amesos~hypre+ifpack2~mumps+cxx17~suite-sparse~epetra~ifpack~ml+muelu~aztec gotype=long_long", when="~sandybridge+cxx17~epetra")
+    depends_on("trilinos-for-albany@develop~superlu-dist+exodus+chaco~isorropia+tempus~teko~intrepid+intrepid2+minitensor+phalanx+pnetcdf+nox+piro+rol+shards+stk+amesos2~amesos~hypre+ifpack2~mumps~suite-sparse~cxx17+sandybridge~epetra~ifpack~ml+muelu~aztec gotype=long_long", when="+sandybridge~cxx17~epetra")
+    depends_on("trilinos-for-albany@develop~superlu-dist+exodus+chaco~isorropia+tempus~teko~intrepid+intrepid2+minitensor+phalanx+pnetcdf+nox+piro+rol+shards+stk+amesos2~amesos~hypre+ifpack2~mumps~suite-sparse+cxx17+sandybridge~epetra~ifpack~ml+muelu~aztec gotype=long_long", when="+sandybridge+cxx17~epetra")
 
     extends("python",             when="+py")
 
@@ -94,7 +101,9 @@ class Albany(CMakePackage):
                        "-DENABLE_MPAS_INTERFACE:BOOL=%s" % (
                            "ON" if "+mpas" in spec else "OFF"),
                        "-DENABLE_ALBANY_PYTHON:BOOL=%s" % (
-                           "ON" if "+py" in spec else "OFF")
+                           "ON" if "+py" in spec else "OFF"),
+                       "-DENABLE_ALBANY_EPETRA:BOOL=%s" % (
+                           "ON" if "+epetra" in spec else "OFF")
                        ])
 
         if "+sfad" in spec:
