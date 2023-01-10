@@ -16,6 +16,7 @@ class Scorpio(CMakePackage):
 
     maintainers = ["xylar"]
 
+    version("1.4.1", sha256="7cb4589410080d7e547ef17ddabe68f749e6af019c1d0e6ee9f11554f3ff6b1a")
     version("1.3.2", sha256="663805fa24e85c88509ecd7893264e3d7d2ff27efb304e0f75dd1f0c450b08a6")
     version("1.3.1", sha256="4ee6db92fff562e49c58ca1e147f242dd6c7168b7d10c3ec47b399f0d683ce5b")
     version("1.2.2", sha256="f944a8b8527b188cf474d9cd26c0aaae5d8a263c245eb67cad92d8dd02ca7bfb")
