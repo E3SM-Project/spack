@@ -87,8 +87,6 @@ class TrilinosForAlbany(CMakePackage):
     # TPLs (alphabet order)
     variant('boost',        default=True,
             description='Compile with Boost')
-    variant('cxx17',          default=False,
-            description='Compile with C++17')
     variant('cgns',         default=False,
             description='Enable CGNS')
     variant('adios2',         default=False,
@@ -385,7 +383,7 @@ class TrilinosForAlbany(CMakePackage):
             '-DTrilinos_VERBOSE_CONFIGURE:BOOL=OFF',
             '-DTrilinos_ENABLE_TESTS:BOOL=OFF',
             '-DTrilinos_ENABLE_EXAMPLES:BOOL=OFF',
-            '-DTrilinos_ENABLE_CXX11:BOOL=ON',
+            '-DCMAKE_CXX_STANDARD=17',
             '-DBUILD_SHARED_LIBS:BOOL=%s' % (
                 'ON' if '+shared' in spec else 'OFF'),
             '-DTrilinos_ENABLE_DEBUG:BOOL=%s' % (
@@ -577,11 +575,6 @@ class TrilinosForAlbany(CMakePackage):
             '-DTrilinos_ENABLE_Gtest:BOOL=%s' % (
                 'ON' if '+gtest' in spec else 'OFF'),
         ])
-
-        if '+cxx17' in spec: 
-            options.extend([
-                '-DCMAKE_CXX_STANDARD=17'
-            ])
 
         if '+hypre' in spec:
             options.extend([
