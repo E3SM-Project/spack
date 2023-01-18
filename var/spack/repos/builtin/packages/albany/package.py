@@ -27,8 +27,6 @@ class Albany(CMakePackage):
             description="Enable CHECK_FPE")
     variant("landice",          default=True,
             description="Enable LANDICE")
-    variant('cxx17',          default=False,
-            description='Compile with C++17')
     variant("unit_tests",          default=True,
             description="Enable_UNIT_TESTS")
     variant("confgui",          default=True,
@@ -52,15 +50,11 @@ class Albany(CMakePackage):
 
     # Add dependencies
     depends_on("mpi")
-    depends_on("trilinos-for-albany@develop~superlu-dist+exodus+chaco+isorropia+tempus+rythmos+teko+intrepid+intrepid2+minitensor+phalanx+pnetcdf+nox+piro+rol+shards+stk+amesos2~hypre+ifpack2~mumps~cxx17~suite-sparse+ml gotype=long_long", when="~sandybridge~cxx17+epetra")
-    depends_on("trilinos-for-albany@develop~superlu-dist+exodus+chaco+isorropia+tempus+rythmos+teko+intrepid+intrepid2+minitensor+phalanx+pnetcdf+nox+piro+rol+shards+stk+amesos2~hypre+ifpack2~mumps+cxx17~suite-sparse+ml gotype=long_long", when="~sandybridge+cxx17+epetra")
-    depends_on("trilinos-for-albany@develop~superlu-dist+exodus+chaco+isorropia+tempus+rythmos+teko+intrepid+intrepid2+minitensor+phalanx+pnetcdf+nox+piro+rol+shards+stk+amesos2~hypre+ifpack2~mumps~suite-sparse~cxx17+sandybridge+ml gotype=long_long", when="+sandybridge~cxx17+epetra")
-    depends_on("trilinos-for-albany@develop~superlu-dist+exodus+chaco+isorropia+tempus+rythmos+teko+intrepid+intrepid2+minitensor+phalanx+pnetcdf+nox+piro+rol+shards+stk+amesos2~hypre+ifpack2~mumps~suite-sparse+cxx17+sandybridge+ml gotype=long_long", when="+sandybridge+cxx17+epetra")
+    depends_on("trilinos-for-albany@develop~superlu-dist+exodus+chaco+isorropia+tempus+rythmos+teko+intrepid+intrepid2+minitensor+phalanx+pnetcdf+nox+piro+rol+shards+stk+amesos2~hypre+ifpack2~mumps~suite-sparse+ml gotype=long_long", when="~sandybridge+epetra")
+    depends_on("trilinos-for-albany@develop~superlu-dist+exodus+chaco+isorropia+tempus+rythmos+teko+intrepid+intrepid2+minitensor+phalanx+pnetcdf+nox+piro+rol+shards+stk+amesos2~hypre+ifpack2~mumps~suite-sparse+sandybridge+ml gotype=long_long", when="+sandybridge+epetra")
 
-    depends_on("trilinos-for-albany@develop~superlu-dist+exodus+chaco~isorropia+tempus+teko~intrepid+intrepid2+minitensor+phalanx+pnetcdf+nox+piro+rol+shards+stk+amesos2~amesos~hypre+ifpack2~mumps~cxx17~suite-sparse~epetra~ifpack~ml+muelu~aztec gotype=long_long", when="~sandybridge~cxx17~epetra")
-    depends_on("trilinos-for-albany@develop~superlu-dist+exodus+chaco~isorropia+tempus+teko~intrepid+intrepid2+minitensor+phalanx+pnetcdf+nox+piro+rol+shards+stk+amesos2~amesos~hypre+ifpack2~mumps+cxx17~suite-sparse~epetra~ifpack~ml+muelu~aztec gotype=long_long", when="~sandybridge+cxx17~epetra")
-    depends_on("trilinos-for-albany@develop~superlu-dist+exodus+chaco~isorropia+tempus+teko~intrepid+intrepid2+minitensor+phalanx+pnetcdf+nox+piro+rol+shards+stk+amesos2~amesos~hypre+ifpack2~mumps~suite-sparse~cxx17+sandybridge~epetra~ifpack~ml+muelu~aztec gotype=long_long", when="+sandybridge~cxx17~epetra")
-    depends_on("trilinos-for-albany@develop~superlu-dist+exodus+chaco~isorropia+tempus+teko~intrepid+intrepid2+minitensor+phalanx+pnetcdf+nox+piro+rol+shards+stk+amesos2~amesos~hypre+ifpack2~mumps~suite-sparse+cxx17+sandybridge~epetra~ifpack~ml+muelu~aztec gotype=long_long", when="+sandybridge+cxx17~epetra")
+    depends_on("trilinos-for-albany@develop~superlu-dist+exodus+chaco~isorropia+tempus+teko~intrepid+intrepid2+minitensor+phalanx+pnetcdf+nox+piro+rol+shards+stk+amesos2~amesos~hypre+ifpack2~mumps~suite-sparse~epetra~ifpack~ml+muelu~aztec gotype=long_long", when="~sandybridge~epetra")
+    depends_on("trilinos-for-albany@develop~superlu-dist+exodus+chaco~isorropia+tempus+teko~intrepid+intrepid2+minitensor+phalanx+pnetcdf+nox+piro+rol+shards+stk+amesos2~amesos~hypre+ifpack2~mumps~suite-sparse+sandybridge~epetra~ifpack~ml+muelu~aztec gotype=long_long", when="+sandybridge~epetra")
 
     extends("python",             when="+py")
 
