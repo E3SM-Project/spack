@@ -368,6 +368,8 @@ class Trilinos(CMakePackage, CudaPackage, ROCmPackage):
 
     # ###################### Dependencies ##########################
 
+    # Starting Feb. 2023, Trilinos requires cmake 3.23 or higher.
+    depends_on("cmake@3.23:")
     depends_on("adios2", when="+adios2")
     depends_on("blas")
     depends_on("boost+graph+math+exception+stacktrace", when="+boost")
