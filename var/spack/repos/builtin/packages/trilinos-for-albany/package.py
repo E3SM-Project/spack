@@ -311,6 +311,8 @@ class TrilinosForAlbany(CMakePackage):
     # ###################### Dependencies ##########################
 
     # Everything should be compiled position independent (-fpic)
+    # Starting Feb. 2023, Trilinos requires cmake 3.23 or higher.
+    depends_on("cmake@3.23:")
     depends_on('blas')
     depends_on('lapack')
     depends_on('boost', when='+boost')

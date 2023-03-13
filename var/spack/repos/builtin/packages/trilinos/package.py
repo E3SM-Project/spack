@@ -426,6 +426,8 @@ class Trilinos(CMakePackage, CudaPackage, ROCmPackage):
         kokkos_spec = "kokkos {0}".format(arch_str)
         depends_on(kokkos_spec, when="@14.4.0: +kokkos {0}".format(arch_str))
 
+    # Starting Feb. 2023, Trilinos requires cmake 3.23 or higher.
+    depends_on("cmake@3.23:")
     depends_on("adios2", when="+adios2")
     depends_on("binder@1.3:", when="@15: +python", type="build")
     depends_on("blas")
