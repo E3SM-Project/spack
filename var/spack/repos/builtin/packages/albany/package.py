@@ -50,6 +50,8 @@ class Albany(CMakePackage):
 
     # Add dependencies
     depends_on("mpi")
+    # Starting Feb. 2023, Trilinos and hence Albany requires cmake 3.23 or higher.
+    depends_on("cmake@3.23:")
     depends_on("trilinos-for-albany@develop~superlu-dist+exodus+chaco+isorropia+tempus+rythmos+teko+intrepid+intrepid2+minitensor+phalanx+pnetcdf+nox+piro+rol+shards+stk+amesos2~hypre+ifpack2~mumps~suite-sparse+ml gotype=long_long", when="~sandybridge+epetra")
     depends_on("trilinos-for-albany@develop~superlu-dist+exodus+chaco+isorropia+tempus+rythmos+teko+intrepid+intrepid2+minitensor+phalanx+pnetcdf+nox+piro+rol+shards+stk+amesos2~hypre+ifpack2~mumps~suite-sparse+sandybridge+ml gotype=long_long", when="+sandybridge+epetra")
 
