@@ -47,6 +47,8 @@ class Albany(CMakePackage):
             description="Enable PyAlbany interface in build")
     variant("epetra",          default=True,
             description="Enable Epetra in build")
+    variant("mesh_depends_on_params",          default=False,
+            description="Enable MESH_DEPENDS_ON_PARAMETERS option in build")
 
     # Add dependencies
     depends_on("mpi")
@@ -99,7 +101,9 @@ class Albany(CMakePackage):
                        "-DENABLE_ALBANY_PYTHON:BOOL=%s" % (
                            "ON" if "+py" in spec else "OFF"),
                        "-DENABLE_ALBANY_EPETRA:BOOL=%s" % (
-                           "ON" if "+epetra" in spec else "OFF")
+                           "ON" if "+epetra" in spec else "OFF"),
+                       "-DENABLE_MESH_DEPENDS_ON_PARAMETERS:BOOL=%s" % (
+                           "ON" if "+mesh_depends_on_params" in spec else "OFF")
                        ])
 
         if "+sfad" in spec:
