@@ -45,7 +45,7 @@ class Albany(CMakePackage):
             description="SFad size")
     variant("py",          default=False,
             description="Enable PyAlbany interface in build")
-    variant("epetra",          default=True,
+    variant("epetra",          default=False,
             description="Enable Epetra in build")
     variant("mesh_depends_on_params",          default=False,
             description="Enable MESH_DEPENDS_ON_PARAMETERS option in build")
