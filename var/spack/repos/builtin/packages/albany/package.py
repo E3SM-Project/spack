@@ -64,6 +64,12 @@ class Albany(CMakePackage):
 
     depends_on("trilinos-for-albany@develop~superlu-dist+exodus+chaco+isorropia+tempus+rythmos+teko+intrepid+intrepid2+minitensor+phalanx+pnetcdf+nox+piro+shards+stk+amesos2~hypre+ifpack2~mumps~suite-sparse+ml+superlu+rol+frosch gotype=long_long", when="~sandybridge+epetra+optimization")
     depends_on("trilinos-for-albany@develop~superlu-dist+exodus+chaco+isorropia+tempus+rythmos+teko+intrepid+intrepid2+minitensor+phalanx+pnetcdf+nox+piro+shards+stk+amesos2~hypre+ifpack2~mumps~suite-sparse+sandybridge+ml+superlu+rol+frosch gotype=long_long", when="+sandybridge+epetra+optimization")
+    
+    depends_on("trilinos-for-albany@develop~superlu-dist+exodus+chaco+isorropia+tempus+rythmos+teko+intrepid+intrepid2+minitensor+phalanx+pnetcdf+nox+piro+shards+stk+amesos2~hypre+ifpack2~mumps~suite-sparse+ml+rol gotype=long_long", when="~sandybridge+epetra~optimization+py")
+    depends_on("trilinos-for-albany@develop~superlu-dist+exodus+chaco+isorropia+tempus+rythmos+teko+intrepid+intrepid2+minitensor+phalanx+pnetcdf+nox+piro+shards+stk+amesos2~hypre+ifpack2~mumps~suite-sparse+sandybridge+ml+rol gotype=long_long", when="+sandybridge+epetra~optimization+py")
+
+    depends_on("trilinos-for-albany@develop~superlu-dist+exodus+chaco~isorropia+tempus+teko~intrepid+intrepid2+minitensor+phalanx+pnetcdf+nox+piro+shards+stk+amesos2~amesos~hypre+ifpack2~mumps~suite-sparse~epetra~ifpack~ml+muelu~aztec+rol gotype=long_long", when="~sandybridge~epetra~optimization+py")
+    depends_on("trilinos-for-albany@develop~superlu-dist+exodus+chaco~isorropia+tempus+teko~intrepid+intrepid2+minitensor+phalanx+pnetcdf+nox+piro+shards+stk+amesos2~amesos~hypre+ifpack2~mumps~suite-sparse+sandybridge~epetra~ifpack~ml+muelu~aztec+rol gotype=long_long", when="+sandybridge~epetra~optimization+py")
 
     depends_on("trilinos-for-albany@develop~superlu-dist+exodus+chaco~isorropia+tempus+teko~intrepid+intrepid2+minitensor+phalanx+pnetcdf+nox+piro+shards+stk+amesos2~amesos~hypre+ifpack2~mumps~suite-sparse~epetra~ifpack~ml+muelu~aztec+superlu+rol+frosch gotype=long_long", when="~sandybridge~epetra+optimization")
     depends_on("trilinos-for-albany@develop~superlu-dist+exodus+chaco~isorropia+tempus+teko~intrepid+intrepid2+minitensor+phalanx+pnetcdf+nox+piro+shards+stk+amesos2~amesos~hypre+ifpack2~mumps~suite-sparse+sandybridge~epetra~ifpack~ml+muelu~aztec+superlu+rol+frosch gotype=long_long", when="+sandybridge~epetra+optimization")
