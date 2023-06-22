@@ -18,12 +18,14 @@ class Moab(AutotoolsPackage):
 
     homepage = "https://bitbucket.org/fathomteam/moab"
     git = "https://bitbucket.org/fathomteam/moab.git"
-    url = "https://ftp.mcs.anl.gov/pub/fathom/moab-5.0.0.tar.gz"
+    url = "https://web.cels.anl.gov/projects/sigma/downloads/moab/moab-5.5.0.tar.gz"
 
     maintainers("vijaysm", "iulian787")
 
     version("develop", branch="develop")
     version("master", branch="master")
+    version("5.5.0", sha256="58969f8a1b209ec9036c08c53a6b7078b368eb3bf99d0368a4de5a2f2a8db678")
+    version("5.4.1", sha256="3625e25321bf37f88d98438f5d56c280b2774172602d8b6eb6c34eedf37686fc")
     version("5.4.1", sha256="3625e25321bf37f88d98438f5d56c280b2774172602d8b6eb6c34eedf37686fc")
     version("5.4.0", sha256="a30d2a1911fbf214ae0175b0856e0475c0077dc51ea5914c850d631155a72952")
     version("5.3.0", sha256="51c31ccbcaa76d9658a44452b9a39f076b795b27a1c9f408fc3d0eea97e032ef")
@@ -87,6 +89,7 @@ class Moab(AutotoolsPackage):
     depends_on("parmetis", when="+parmetis")
     # FIXME it seems that zoltan needs to be built without fortran
     depends_on("zoltan~fortran", when="+zoltan")
+    depends_on("tempestremap@2.2", when="@5.5.0+tempest")
     depends_on("tempestremap@2.1.6", when="@5.4.1+tempest")
     depends_on("tempestremap@2.1.6", when="@5.4.0+tempest")
     depends_on("tempestremap@2.1.1", when="@5.3.1+tempest")
