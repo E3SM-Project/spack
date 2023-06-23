@@ -34,7 +34,6 @@ class Tempestextremes(MakefilePackage):
     variant('mpi', default=True, description='Build with MPI support')
 
     # Required dependencies
-    depends_on('makedepend', type='build')
     depends_on('netcdf-c')
 
     # Optional dependencies
