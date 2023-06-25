@@ -146,6 +146,7 @@ class CMakeBuilder(BaseBuilder, spack.build_systems.cmake.CMakeBuilder):
             self.define("CMAKE_INSTALL_LIBDIR", self.prefix.lib),
             self.define_from_variant("CMAKE_POSITION_INDEPENDENT_CODE", "pic"),
             self.define("enable_tests", self.pkg.run_tests),
+            self.define("BUILD_SHARED_LIBS", "ON"),
         ]
         return args
 
