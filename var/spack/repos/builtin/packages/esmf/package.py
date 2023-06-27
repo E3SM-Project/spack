@@ -331,15 +331,23 @@ class Esmf(MakefilePackage):
         ##########
 
         if "+netcdf" in spec:
-            # ESMF provides the ability to read Grid and Mesh data in
-            # NetCDF format.
-            env.set("ESMF_NETCDF", "nc-config")
-            env.set("ESMF_NFCONFIG", "nf-config")
-            netcdfc = spec["netcdf-c"]
-            if netcdfc.satisfies("~shared"):
-                nc_config = which(os.path.join(netcdfc.prefix.bin, "nc-config"))
-                nc_flags = nc_config("--static", "--libs", output=str).strip()
-                env.set("ESMF_NETCDF_LIBS", nc_flags)
+            if os.environ.get("NERSC_HOST", "") == "perlmutter":
+                # nc-config and nf-config don't have the right --libs and
+                # --flibs
+                print('Installing ESMF on Perlmutter')
+                env.set("ESMF_NETCDF", "split")
+                env.set("ESMF_NETCDF_LIBPATH", spec["netcdf-c"].prefix.lib)
+                env.set("ESMF_NETCDF_INCLUDE", spec["netcdf-c"].prefix.include)
+            else:
+                # ESMF provides the ability to read Grid and Mesh data in
+                # NetCDF format.
+                env.set("ESMF_NETCDF", "nc-config")
+                env.set("ESMF_NFCONFIG", "nf-config")
+                netcdfc = spec["netcdf-c"]
+                if netcdfc.satisfies("~shared"):
+                    nc_config = which(os.path.join(netcdfc.prefix.bin, "nc-config"))
+                    nc_flags = nc_config("--static", "--libs", output=str).strip()
+                    env.set("ESMF_NETCDF_LIBS", nc_flags)
 
         ###################
         # Parallel-NetCDF #
