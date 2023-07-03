@@ -106,6 +106,9 @@ class Esmf(MakefilePackage):
     depends_on("parallelio@2.5.10: ~mpi", when="@8.5:+external-parallelio~mpi")
     depends_on("cmake@3.5.2:", type="build", when="~external-parallelio")
 
+    # Build dependencies
+    depends_on("cmake@3.5.2:", type="build", when="~external-parallelio")
+
     # Testing dependencies
     depends_on("perl", type="test")
 
