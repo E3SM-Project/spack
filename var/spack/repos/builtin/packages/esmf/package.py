@@ -342,12 +342,19 @@ class Esmf(MakefilePackage):
                 env.set("ESMF_NETCDF_LIBPATH", spec["netcdf-c"].prefix.lib)
                 env.set("ESMF_NETCDF_INCLUDE", spec["netcdf-c"].prefix.include)
             elif os.environ.get("HOST", "").startswith("ch-fe"):
-                    # nc-config and nf-config don't have the right --libs and
-                    # --flibs
-                    print('Installing ESMF on Chicoma')
-                    env.set("ESMF_NETCDF", "split")
-                    env.set("ESMF_NETCDF_LIBPATH", spec["netcdf-c"].prefix.lib)
-                    env.set("ESMF_NETCDF_INCLUDE", spec["netcdf-c"].prefix.include)
+                # nc-config and nf-config don't have the right --libs and
+                # --flibs
+                print('Installing ESMF on Chicoma')
+                env.set("ESMF_NETCDF", "split")
+                env.set("ESMF_NETCDF_LIBPATH", spec["netcdf-c"].prefix.lib)
+                env.set("ESMF_NETCDF_INCLUDE", spec["netcdf-c"].prefix.include)
+            elif os.environ.get("LMOD_SYSTEM_NAME", "") == "frontier":
+                # nc-config and nf-config don't have the right --libs and
+                # --flibs
+                print('Installing ESMF on Frontier')
+                env.set("ESMF_NETCDF", "split")
+                env.set("ESMF_NETCDF_LIBPATH", spec["netcdf-c"].prefix.lib)
+                env.set("ESMF_NETCDF_INCLUDE", spec["netcdf-c"].prefix.include)
             else:
                 # ESMF provides the ability to read Grid and Mesh data in
                 # NetCDF format.
