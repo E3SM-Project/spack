@@ -417,6 +417,7 @@ class TrilinosForAlbany(CMakePackage):
         # ################## Trilinos Packages #####################
 
         options.extend([
+            '-DTrilinos_USE_GNUINSTALLDIRS:BOOL=OFF',
             '-DTrilinos_ENABLE_ALL_OPTIONAL_PACKAGES:BOOL=%s' % (
                 'ON' if '+alloptpkgs' in spec else 'OFF'),
             '-DTrilinos_ENABLE_Amesos:BOOL=%s' % (
