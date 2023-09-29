@@ -332,6 +332,7 @@ class TrilinosForAlbany(CMakePackage):
     depends_on('mpi')
     depends_on('netcdf-c+mpi')
     depends_on('parallel-netcdf', when="@12.12.1:+pnetcdf")
+    depends_on('parallel-netcdf', when="@compass-2023-08-03:+pnetcdf")
     depends_on('parmetis', when='+metis')
     depends_on('cgns', when='+cgns')
     depends_on('adios2', when='+adios2')
