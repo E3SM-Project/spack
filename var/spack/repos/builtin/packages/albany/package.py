@@ -56,23 +56,25 @@ class Albany(CMakePackage):
     depends_on("mpi")
     # Starting Feb. 2023, Trilinos and hence Albany requires cmake 3.23 or higher.
     depends_on("cmake@3.23:")
-    depends_on("trilinos-for-albany@develop~superlu-dist+exodus+chaco+isorropia+tempus+rythmos+teko+intrepid+intrepid2+minitensor+phalanx+pnetcdf+nox+piro+shards+stk+amesos2~hypre+ifpack2~mumps~suite-sparse+ml gotype=long_long", when="~sandybridge+epetra~optimization")
-    depends_on("trilinos-for-albany@develop~superlu-dist+exodus+chaco+isorropia+tempus+rythmos+teko+intrepid+intrepid2+minitensor+phalanx+pnetcdf+nox+piro+shards+stk+amesos2~hypre+ifpack2~mumps~suite-sparse+sandybridge+ml gotype=long_long", when="+sandybridge+epetra~optimization")
+    depends_on("trilinos-for-albany~superlu-dist+exodus+chaco+isorropia+tempus+rythmos+teko+intrepid+intrepid2+minitensor+phalanx+pnetcdf+nox+piro+shards+stk+amesos2~hypre+ifpack2~mumps~suite-sparse+ml gotype=long_long", when="~sandybridge+epetra~optimization")
+    depends_on("trilinos-for-albany~superlu-dist+exodus+chaco+isorropia+tempus+rythmos+teko+intrepid+intrepid2+minitensor+phalanx+pnetcdf+nox+piro+shards+stk+amesos2~hypre+ifpack2~mumps~suite-sparse+sandybridge+ml gotype=long_long", when="+sandybridge+epetra~optimization")
 
-    depends_on("trilinos-for-albany@develop~superlu-dist+exodus+chaco~isorropia+tempus+teko~intrepid+intrepid2+minitensor+phalanx+pnetcdf+nox+piro+shards+stk+amesos2~amesos~hypre+ifpack2~mumps~suite-sparse~epetra~ifpack~ml+muelu~aztec gotype=long_long", when="~sandybridge~epetra~optimization")
-    depends_on("trilinos-for-albany@develop~superlu-dist+exodus+chaco~isorropia+tempus+teko~intrepid+intrepid2+minitensor+phalanx+pnetcdf+nox+piro+shards+stk+amesos2~amesos~hypre+ifpack2~mumps~suite-sparse+sandybridge~epetra~ifpack~ml+muelu~aztec gotype=long_long", when="+sandybridge~epetra~optimization")
+    depends_on("trilinos-for-albany~superlu-dist+exodus+chaco~isorropia+tempus+teko~intrepid+intrepid2+minitensor+phalanx+pnetcdf+nox+piro+shards+stk+amesos2~amesos~hypre+ifpack2~mumps~suite-sparse~epetra~ifpack~ml+muelu~aztec gotype=long_long", when="~sandybridge~epetra~optimization")
+    depends_on("trilinos-for-albany~superlu-dist+exodus+chaco~isorropia+tempus+teko~intrepid+intrepid2+minitensor+phalanx+pnetcdf+nox+piro+shards+stk+amesos2~amesos~hypre+ifpack2~mumps~suite-sparse+sandybridge~epetra~ifpack~ml+muelu~aztec gotype=long_long", when="+sandybridge~epetra~optimization")
 
-    depends_on("trilinos-for-albany@develop~superlu-dist+exodus+chaco+isorropia+tempus+rythmos+teko+intrepid+intrepid2+minitensor+phalanx+pnetcdf+nox+piro+shards+stk+amesos2~hypre+ifpack2~mumps~suite-sparse+ml+superlu+rol+frosch gotype=long_long", when="~sandybridge+epetra+optimization")
-    depends_on("trilinos-for-albany@develop~superlu-dist+exodus+chaco+isorropia+tempus+rythmos+teko+intrepid+intrepid2+minitensor+phalanx+pnetcdf+nox+piro+shards+stk+amesos2~hypre+ifpack2~mumps~suite-sparse+sandybridge+ml+superlu+rol+frosch gotype=long_long", when="+sandybridge+epetra+optimization")
-    
-    depends_on("trilinos-for-albany@develop~superlu-dist+exodus+chaco+isorropia+tempus+rythmos+teko+intrepid+intrepid2+minitensor+phalanx+pnetcdf+nox+piro+shards+stk+amesos2~hypre+ifpack2~mumps~suite-sparse+ml+rol gotype=long_long", when="~sandybridge+epetra~optimization+py")
-    depends_on("trilinos-for-albany@develop~superlu-dist+exodus+chaco+isorropia+tempus+rythmos+teko+intrepid+intrepid2+minitensor+phalanx+pnetcdf+nox+piro+shards+stk+amesos2~hypre+ifpack2~mumps~suite-sparse+sandybridge+ml+rol gotype=long_long", when="+sandybridge+epetra~optimization+py")
+    depends_on("trilinos-for-albany~superlu-dist+exodus+chaco+isorropia+tempus+rythmos+teko+intrepid+intrepid2+minitensor+phalanx+pnetcdf+nox+piro+shards+stk+amesos2~hypre+ifpack2~mumps~suite-sparse+ml+superlu+rol+frosch gotype=long_long", when="~sandybridge+epetra+optimization")
+    depends_on("trilinos-for-albany~superlu-dist+exodus+chaco+isorropia+tempus+rythmos+teko+intrepid+intrepid2+minitensor+phalanx+pnetcdf+nox+piro+shards+stk+amesos2~hypre+ifpack2~mumps~suite-sparse+sandybridge+ml+superlu+rol+frosch gotype=long_long", when="+sandybridge+epetra+optimization")
 
-    depends_on("trilinos-for-albany@develop~superlu-dist+exodus+chaco~isorropia+tempus+teko~intrepid+intrepid2+minitensor+phalanx+pnetcdf+nox+piro+shards+stk+amesos2~amesos~hypre+ifpack2~mumps~suite-sparse~epetra~ifpack~ml+muelu~aztec+rol gotype=long_long", when="~sandybridge~epetra~optimization+py")
-    depends_on("trilinos-for-albany@develop~superlu-dist+exodus+chaco~isorropia+tempus+teko~intrepid+intrepid2+minitensor+phalanx+pnetcdf+nox+piro+shards+stk+amesos2~amesos~hypre+ifpack2~mumps~suite-sparse+sandybridge~epetra~ifpack~ml+muelu~aztec+rol gotype=long_long", when="+sandybridge~epetra~optimization+py")
+    depends_on("trilinos-for-albany~superlu-dist+exodus+chaco+isorropia+tempus+rythmos+teko+intrepid+intrepid2+minitensor+phalanx+pnetcdf+nox+piro+shards+stk+amesos2~hypre+ifpack2~mumps~suite-sparse+ml+rol gotype=long_long", when="~sandybridge+epetra~optimization+py")
+    depends_on("trilinos-for-albany~superlu-dist+exodus+chaco+isorropia+tempus+rythmos+teko+intrepid+intrepid2+minitensor+phalanx+pnetcdf+nox+piro+shards+stk+amesos2~hypre+ifpack2~mumps~suite-sparse+sandybridge+ml+rol gotype=long_long", when="+sandybridge+epetra~optimization+py")
 
-    depends_on("trilinos-for-albany@develop~superlu-dist+exodus+chaco~isorropia+tempus+teko~intrepid+intrepid2+minitensor+phalanx+pnetcdf+nox+piro+shards+stk+amesos2~amesos~hypre+ifpack2~mumps~suite-sparse~epetra~ifpack~ml+muelu~aztec+superlu+rol+frosch gotype=long_long", when="~sandybridge~epetra+optimization")
-    depends_on("trilinos-for-albany@develop~superlu-dist+exodus+chaco~isorropia+tempus+teko~intrepid+intrepid2+minitensor+phalanx+pnetcdf+nox+piro+shards+stk+amesos2~amesos~hypre+ifpack2~mumps~suite-sparse+sandybridge~epetra~ifpack~ml+muelu~aztec+superlu+rol+frosch gotype=long_long", when="+sandybridge~epetra+optimization")
+    depends_on("trilinos-for-albany~superlu-dist+exodus+chaco~isorropia+tempus+teko~intrepid+intrepid2+minitensor+phalanx+pnetcdf+nox+piro+shards+stk+amesos2~amesos~hypre+ifpack2~mumps~suite-sparse~epetra~ifpack~ml+muelu~aztec+rol gotype=long_long", when="~sandybridge~epetra~optimization+py")
+    depends_on("trilinos-for-albany~superlu-dist+exodus+chaco~isorropia+tempus+teko~intrepid+intrepid2+minitensor+phalanx+pnetcdf+nox+piro+shards+stk+amesos2~amesos~hypre+ifpack2~mumps~suite-sparse+sandybridge~epetra~ifpack~ml+muelu~aztec+rol gotype=long_long", when="+sandybridge~epetra~optimization+py")
+
+    depends_on("trilinos-for-albany~superlu-dist+exodus+chaco~isorropia+tempus+teko~intrepid+intrepid2+minitensor+phalanx+pnetcdf+nox+piro+shards+stk+amesos2~amesos~hypre+ifpack2~mumps~suite-sparse~epetra~ifpack~ml+muelu~aztec+superlu+rol+frosch gotype=long_long", when="~sandybridge~epetra+optimization")
+    depends_on("trilinos-for-albany~superlu-dist+exodus+chaco~isorropia+tempus+teko~intrepid+intrepid2+minitensor+phalanx+pnetcdf+nox+piro+shards+stk+amesos2~amesos~hypre+ifpack2~mumps~suite-sparse+sandybridge~epetra~ifpack~ml+muelu~aztec+superlu+rol+frosch gotype=long_long", when="+sandybridge~epetra+optimization")
+
+    depends_on("trilinos-for-albany@develop", when="@develop")
 
     extends("python",             when="+py")
 
@@ -81,9 +83,9 @@ class Albany(CMakePackage):
     depends_on("py-mpi4py",       when="+py")
     depends_on("py-scipy",        when="+py")
 
-    #IKT, 2/27/2022: comment the above lines and uncomment the followint to use trilinos, instead of 
-    #trilinos-for-albany.  The code should build but will not run (there are seg faults at the end of 
-    #each test that is run, after time monitor output).  
+    #IKT, 2/27/2022: comment the above lines and uncomment the followint to use trilinos, instead of
+    #trilinos-for-albany.  The code should build but will not run (there are seg faults at the end of
+    #each test that is run, after time monitor output).
     #depends_on("trilinos~superlu-dist+exodus+chaco+isorropia+tempus+rythmos+teko+intrepid+intrepid2+minitensor+phalanx+nox+piro+shards+stk+amesos2~hypre+ifpack2~mumps~suite-sparse+panzer gotype=long_long")
     def cmake_args(self):
         spec = self.spec
@@ -129,7 +131,7 @@ class Albany(CMakePackage):
           options.extend([
             "-DALBANY_SFAD_SIZE=%d" % int(spec.variants["sfadsize"].value)
                        ])
-        if "+debug" in spec: 
+        if "+debug" in spec:
           options.extend([
             "-DCMAKE_BUILD_TYPE:STRING=DEBUG"
                        ])
