@@ -19,6 +19,7 @@ class Albany(CMakePackage):
 
     maintainers("ikalash")
 
+    version('compass-2023-08-03', tag='compass-2023-08-03')
     version("develop", branch="master")
 
     variant("debug",          default=False,
@@ -75,6 +76,7 @@ class Albany(CMakePackage):
     depends_on("trilinos-for-albany~superlu-dist+exodus+chaco~isorropia+tempus+teko~intrepid+intrepid2+minitensor+phalanx+pnetcdf+nox+piro+shards+stk+amesos2~amesos~hypre+ifpack2~mumps~suite-sparse+sandybridge~epetra~ifpack~ml+muelu~aztec+superlu+rol+frosch gotype=long_long", when="+sandybridge~epetra+optimization")
 
     depends_on("trilinos-for-albany@develop", when="@develop")
+    depends_on("trilinos-for-albany@compass-2023-08-03", when="@compass-2023-08-03")
 
     extends("python",             when="+py")
 
