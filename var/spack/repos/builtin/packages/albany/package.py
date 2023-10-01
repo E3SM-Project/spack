@@ -96,6 +96,11 @@ class Albany(CMakePackage):
         )
 
         options.extend([
+            '-DCMAKE_C_COMPILER=%s'       % spec['mpi'].mpicc,
+            '-DCMAKE_CXX_COMPILER=%s'     % spec['mpi'].mpicxx
+                       ])
+
+        options.extend([
                        "-DENABLE_LANDICE:BOOL=%s" % (
                            "ON" if "+landice" in spec else "OFF"),
                        "-DENABLE_UNIT_TESTS:BOOL=%s" % (
