@@ -51,7 +51,9 @@ class Albany(CMakePackage):
     variant("mesh_depends_on_params",          default=False,
             description="Enable MESH_DEPENDS_ON_PARAMETERS option in build")
     variant("optimization",          default=False,
-            description="Enable packages needed for Albany optimization capabilities (SuperLU, FROSCh, ROL)")
+            description="Enable packages needed for Albany optimization capabilities (SuperLU, FROSCh, ROL)"),
+    variant("omegah",          default=False,
+            description="Enable Omega_h in build")
 
     # Add dependencies
     depends_on("mpi")
@@ -126,7 +128,9 @@ class Albany(CMakePackage):
                        "-DENABLE_ALBANY_EPETRA:BOOL=%s" % (
                            "ON" if "+epetra" in spec else "OFF"),
                        "-DENABLE_MESH_DEPENDS_ON_PARAMETERS:BOOL=%s" % (
-                           "ON" if "+mesh_depends_on_params" in spec else "OFF")
+                           "ON" if "+mesh_depends_on_params" in spec else "OFF"),
+                       "-DENABLE_OMEGAH:BOOL=%s" % (
+                           "ON" if "+omegah" in spec else "OFF")
                        ])
 
         if "+sfad" in spec:
