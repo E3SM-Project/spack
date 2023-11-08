@@ -24,6 +24,7 @@ class Moab(AutotoolsPackage):
 
     version("develop", branch="develop")
     version("master", branch="master")
+    version("5.5.1", sha256="67b6ed3a13c235cec16f60f8f46f9bf0371fd321cf36dea113d0e09f09d0d438")
     version("5.5.0", sha256="58969f8a1b209ec9036c08c53a6b7078b368eb3bf99d0368a4de5a2f2a8db678")
     version("5.4.1", sha256="3625e25321bf37f88d98438f5d56c280b2774172602d8b6eb6c34eedf37686fc")
     version("5.4.0", sha256="a30d2a1911fbf214ae0175b0856e0475c0077dc51ea5914c850d631155a72952")
