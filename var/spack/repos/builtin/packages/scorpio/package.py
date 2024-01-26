@@ -15,6 +15,7 @@ class Scorpio(CMakePackage):
     url      = "https://github.com/E3SM-Project/scorpio/archive/refs/tags/scorpio-v1.2.2.tar.gz"
 
     maintainers("xylar")
+    version("1.4.2", sha256="e41b2725b2389df48b91932224a0dfb8c8fe6e98c7a49e1dfd65f7d49f7ffa81")
     version("1.4.1", sha256="7cb4589410080d7e547ef17ddabe68f749e6af019c1d0e6ee9f11554f3ff6b1a")
     version("1.3.2", sha256="663805fa24e85c88509ecd7893264e3d7d2ff27efb304e0f75dd1f0c450b08a6")
     version("1.3.1", sha256="4ee6db92fff562e49c58ca1e147f242dd6c7168b7d10c3ec47b399f0d683ce5b")
