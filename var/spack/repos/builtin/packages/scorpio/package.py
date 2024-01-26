@@ -47,7 +47,6 @@ class Scorpio(CMakePackage):
         env["CC"] = spec["mpi"].mpicc
         env["CXX"] = spec["mpi"].mpicxx
         env["FC"] = spec["mpi"].mpifc
-        src = self.stage.source_path
         args = [
             define("NetCDF_C_PATH", spec["netcdf-c"].prefix),
             define("NetCDF_Fortran_PATH", spec["netcdf-fortran"].prefix),
@@ -65,4 +64,9 @@ class Scorpio(CMakePackage):
             define_from_variant("PIO_ENABLE_TOOLS ", "tools"),
             define_from_variant("PIO_USE_MALLOC", "malloc"),
         ])
+        if spec.satisfies("%cce"):
+            # force lowercase fortran modules
+            args.extend([
+                define("CMAKE_Fortran_FLAGS", "-em -ef")
+                ])
         return args
