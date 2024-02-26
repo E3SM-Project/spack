@@ -80,7 +80,7 @@ class Albany(CMakePackage):
     depends_on("trilinos-for-albany@develop", when="@develop")
     depends_on("trilinos-for-albany@compass-2023-08-03", when="@compass-2023-08-03")
 
-    extends("python",             when="+py")
+    extends("python@:3.9",        when="+py")
 
     depends_on("py-pybind11",     when="+py")
     depends_on("py-numpy",        when="+py")
@@ -125,6 +125,8 @@ class Albany(CMakePackage):
                            "ON" if "+mpas" in spec else "OFF"),
                        "-DENABLE_ALBANY_PYTHON:BOOL=%s" % (
                            "ON" if "+py" in spec else "OFF"),
+                       "-DPYTHON_EXECUTABLE=%s" % (
+                           spec["python"].command.path if "+py" in spec else ""),
                        "-DENABLE_ALBANY_EPETRA:BOOL=%s" % (
                            "ON" if "+epetra" in spec else "OFF"),
                        "-DENABLE_MESH_DEPENDS_ON_PARAMETERS:BOOL=%s" % (
