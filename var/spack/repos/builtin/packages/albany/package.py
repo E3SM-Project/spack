@@ -19,6 +19,7 @@ class Albany(CMakePackage):
 
     maintainers("ikalash")
 
+    version('compass-2024-03-13', tag='compass-2024-03-13')
     version('compass-2023-08-03', tag='compass-2023-08-03')
     version("develop", branch="master")
 
@@ -79,6 +80,7 @@ class Albany(CMakePackage):
 
     depends_on("trilinos-for-albany@develop", when="@develop")
     depends_on("trilinos-for-albany@compass-2023-08-03", when="@compass-2023-08-03")
+    depends_on("trilinos-for-albany@compass-2024-03-13", when="@compass-2024-03-13")
 
     extends("python@:3.9",        when="+py")
 

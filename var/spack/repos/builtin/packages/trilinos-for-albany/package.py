@@ -33,6 +33,8 @@ class TrilinosForAlbany(CMakePackage):
 
     # ###################### Versions ##########################
 
+    version('compass-2024-03-13', sha256='45f60563439f124b14a3c131628b8691d53d0bdb601d5329e3705bb01dfe13c5',
+            url='https://github.com/E3SM-Project/Trilinos/archive/refs/tags/compass-2024-03-13.tar.gz')
     version('compass-2023-08-03', sha256='b3d5c06eb31c22391923c6adf4b748672c81d8e4dc6118c421cb76a377512808',
             url='https://github.com/E3SM-Project/Trilinos/archive/refs/tags/compass-2023-08-23.tar.gz')
     version('xsdk-0.2.0', tag='xsdk-0.2.0')
