@@ -127,8 +127,6 @@ class Albany(CMakePackage):
                            "ON" if "+mpas" in spec else "OFF"),
                        "-DENABLE_ALBANY_PYTHON:BOOL=%s" % (
                            "ON" if "+py" in spec else "OFF"),
-                       "-DPYTHON_EXECUTABLE=%s" % (
-                           spec["python"].command.path if "+py" in spec else ""),
                        "-DENABLE_ALBANY_EPETRA:BOOL=%s" % (
                            "ON" if "+epetra" in spec else "OFF"),
                        "-DENABLE_MESH_DEPENDS_ON_PARAMETERS:BOOL=%s" % (
@@ -136,6 +134,10 @@ class Albany(CMakePackage):
                        "-DENABLE_OMEGAH:BOOL=%s" % (
                            "ON" if "+omegah" in spec else "OFF")
                        ])
+        if "+py" in spec:
+            options.append(
+                "-DPYTHON_EXECUTABLE=%s" % (spec["python"].command.path)
+                )
 
         if "+sfad" in spec:
           options.extend([
