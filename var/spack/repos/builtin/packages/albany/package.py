@@ -47,8 +47,6 @@ class Albany(CMakePackage):
             description="SFad size")
     variant("py",          default=False,
             description="Enable PyAlbany interface in build")
-    variant("epetra",          default=False,
-            description="Enable Epetra in build")
     variant("mesh_depends_on_params",          default=False,
             description="Enable MESH_DEPENDS_ON_PARAMETERS option in build")
     variant("optimization",          default=False,
@@ -60,23 +58,15 @@ class Albany(CMakePackage):
     depends_on("mpi")
     # Starting Feb. 2023, Trilinos and hence Albany requires cmake 3.23 or higher.
     depends_on("cmake@3.23:")
-    depends_on("trilinos-for-albany~superlu-dist+exodus+chaco+isorropia+tempus+rythmos+teko+intrepid+intrepid2+minitensor+phalanx+pnetcdf+nox+piro+shards+stk+amesos2~hypre+ifpack2~mumps~suite-sparse+ml gotype=long_long", when="~sandybridge+epetra~optimization")
-    depends_on("trilinos-for-albany~superlu-dist+exodus+chaco+isorropia+tempus+rythmos+teko+intrepid+intrepid2+minitensor+phalanx+pnetcdf+nox+piro+shards+stk+amesos2~hypre+ifpack2~mumps~suite-sparse+sandybridge+ml gotype=long_long", when="+sandybridge+epetra~optimization")
 
-    depends_on("trilinos-for-albany~superlu-dist+exodus+chaco~isorropia+tempus+teko~intrepid+intrepid2+minitensor+phalanx+pnetcdf+nox+piro+shards+stk+amesos2~amesos~hypre+ifpack2~mumps~suite-sparse~epetra~ifpack~ml+muelu~aztec gotype=long_long", when="~sandybridge~epetra~optimization")
-    depends_on("trilinos-for-albany~superlu-dist+exodus+chaco~isorropia+tempus+teko~intrepid+intrepid2+minitensor+phalanx+pnetcdf+nox+piro+shards+stk+amesos2~amesos~hypre+ifpack2~mumps~suite-sparse+sandybridge~epetra~ifpack~ml+muelu~aztec gotype=long_long", when="+sandybridge~epetra~optimization")
+    depends_on("trilinos-for-albany~superlu-dist+exodus+chaco~isorropia+tempus+teko~intrepid+intrepid2+minitensor+phalanx+pnetcdf+nox+piro+shards+stk+amesos2~amesos~hypre+ifpack2~mumps~suite-sparse~epetra~ifpack~ml+muelu~aztec gotype=long_long", when="~sandybridge~optimization")
+    depends_on("trilinos-for-albany~superlu-dist+exodus+chaco~isorropia+tempus+teko~intrepid+intrepid2+minitensor+phalanx+pnetcdf+nox+piro+shards+stk+amesos2~amesos~hypre+ifpack2~mumps~suite-sparse+sandybridge~epetra~ifpack~ml+muelu~aztec gotype=long_long", when="+sandybridge~optimization")
 
-    depends_on("trilinos-for-albany~superlu-dist+exodus+chaco+isorropia+tempus+rythmos+teko+intrepid+intrepid2+minitensor+phalanx+pnetcdf+nox+piro+shards+stk+amesos2~hypre+ifpack2~mumps~suite-sparse+ml+superlu+rol+frosch gotype=long_long", when="~sandybridge+epetra+optimization")
-    depends_on("trilinos-for-albany~superlu-dist+exodus+chaco+isorropia+tempus+rythmos+teko+intrepid+intrepid2+minitensor+phalanx+pnetcdf+nox+piro+shards+stk+amesos2~hypre+ifpack2~mumps~suite-sparse+sandybridge+ml+superlu+rol+frosch gotype=long_long", when="+sandybridge+epetra+optimization")
+    depends_on("trilinos-for-albany~superlu-dist+exodus+chaco~isorropia+tempus+teko~intrepid+intrepid2+minitensor+phalanx+pnetcdf+nox+piro+shards+stk+amesos2~amesos~hypre+ifpack2~mumps~suite-sparse~epetra~ifpack~ml+muelu~aztec+rol gotype=long_long", when="~sandybridge~optimization+py")
+    depends_on("trilinos-for-albany~superlu-dist+exodus+chaco~isorropia+tempus+teko~intrepid+intrepid2+minitensor+phalanx+pnetcdf+nox+piro+shards+stk+amesos2~amesos~hypre+ifpack2~mumps~suite-sparse+sandybridge~epetra~ifpack~ml+muelu~aztec+rol gotype=long_long", when="+sandybridge~optimization+py")
 
-    depends_on("trilinos-for-albany~superlu-dist+exodus+chaco+isorropia+tempus+rythmos+teko+intrepid+intrepid2+minitensor+phalanx+pnetcdf+nox+piro+shards+stk+amesos2~hypre+ifpack2~mumps~suite-sparse+ml+rol gotype=long_long", when="~sandybridge+epetra~optimization+py")
-    depends_on("trilinos-for-albany~superlu-dist+exodus+chaco+isorropia+tempus+rythmos+teko+intrepid+intrepid2+minitensor+phalanx+pnetcdf+nox+piro+shards+stk+amesos2~hypre+ifpack2~mumps~suite-sparse+sandybridge+ml+rol gotype=long_long", when="+sandybridge+epetra~optimization+py")
-
-    depends_on("trilinos-for-albany~superlu-dist+exodus+chaco~isorropia+tempus+teko~intrepid+intrepid2+minitensor+phalanx+pnetcdf+nox+piro+shards+stk+amesos2~amesos~hypre+ifpack2~mumps~suite-sparse~epetra~ifpack~ml+muelu~aztec+rol gotype=long_long", when="~sandybridge~epetra~optimization+py")
-    depends_on("trilinos-for-albany~superlu-dist+exodus+chaco~isorropia+tempus+teko~intrepid+intrepid2+minitensor+phalanx+pnetcdf+nox+piro+shards+stk+amesos2~amesos~hypre+ifpack2~mumps~suite-sparse+sandybridge~epetra~ifpack~ml+muelu~aztec+rol gotype=long_long", when="+sandybridge~epetra~optimization+py")
-
-    depends_on("trilinos-for-albany~superlu-dist+exodus+chaco~isorropia+tempus+teko~intrepid+intrepid2+minitensor+phalanx+pnetcdf+nox+piro+shards+stk+amesos2~amesos~hypre+ifpack2~mumps~suite-sparse~epetra~ifpack~ml+muelu~aztec+superlu+rol+frosch gotype=long_long", when="~sandybridge~epetra+optimization")
-    depends_on("trilinos-for-albany~superlu-dist+exodus+chaco~isorropia+tempus+teko~intrepid+intrepid2+minitensor+phalanx+pnetcdf+nox+piro+shards+stk+amesos2~amesos~hypre+ifpack2~mumps~suite-sparse+sandybridge~epetra~ifpack~ml+muelu~aztec+superlu+rol+frosch gotype=long_long", when="+sandybridge~epetra+optimization")
+    depends_on("trilinos-for-albany~superlu-dist+exodus+chaco~isorropia+tempus+teko~intrepid+intrepid2+minitensor+phalanx+pnetcdf+nox+piro+shards+stk+amesos2~amesos~hypre+ifpack2~mumps~suite-sparse~epetra~ifpack~ml+muelu~aztec+superlu+rol+frosch gotype=long_long", when="~sandybridge+optimization")
+    depends_on("trilinos-for-albany~superlu-dist+exodus+chaco~isorropia+tempus+teko~intrepid+intrepid2+minitensor+phalanx+pnetcdf+nox+piro+shards+stk+amesos2~amesos~hypre+ifpack2~mumps~suite-sparse+sandybridge~epetra~ifpack~ml+muelu~aztec+superlu+rol+frosch gotype=long_long", when="+sandybridge+optimization")
 
     depends_on("trilinos-for-albany@develop", when="@develop")
     depends_on("trilinos-for-albany@compass-2023-08-03", when="@compass-2023-08-03")
@@ -127,8 +117,6 @@ class Albany(CMakePackage):
                            "ON" if "+mpas" in spec else "OFF"),
                        "-DENABLE_ALBANY_PYTHON:BOOL=%s" % (
                            "ON" if "+py" in spec else "OFF"),
-                       "-DENABLE_ALBANY_EPETRA:BOOL=%s" % (
-                           "ON" if "+epetra" in spec else "OFF"),
                        "-DENABLE_MESH_DEPENDS_ON_PARAMETERS:BOOL=%s" % (
                            "ON" if "+mesh_depends_on_params" in spec else "OFF"),
                        "-DENABLE_OMEGAH:BOOL=%s" % (
