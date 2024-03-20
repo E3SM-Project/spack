@@ -26,6 +26,7 @@ class Tempestextremes(MakefilePackage):
 
     maintainers = ['xylar', 'paullric']
 
+    version('2.2.2', sha256='7c4662ed1750a2e69049b358d37420946cac39a5ec78964259cff149008ac045')
     version('2.2.1', sha256='bd3feeb187587d95a6fb94314eecd9c72c9349c6e1afac347edafe7b4d450a93')
     version('2.2', sha256='d8fdc4a2c1b8794cb1699739e5d0119f0ed5a4eb5ab6212cfbc0215ec6110bc5')
     version('2.1', sha256='fc31940d855297964fa091ed5da0f96c28e8a25fd237dfa660357a054600ab70')
