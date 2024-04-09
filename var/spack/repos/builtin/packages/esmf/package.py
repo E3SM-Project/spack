@@ -107,9 +107,6 @@ class Esmf(MakefilePackage):
     depends_on("parallelio@2.5.10: ~mpi", when="@8.5:+external-parallelio~mpi")
     depends_on("cmake@3.5.2:", type="build", when="~external-parallelio")
 
-    # Build dependencies
-    depends_on("cmake@3.5.2:", type="build", when="~external-parallelio")
-
     # Testing dependencies
     depends_on("perl", type="test")
 
@@ -335,37 +332,11 @@ class Esmf(MakefilePackage):
         ##########
 
         if "+netcdf" in spec:
-            if os.environ.get("NERSC_HOST", "") == "perlmutter":
-                # nc-config and nf-config don't have the right --libs and
-                # --flibs
-                print('Installing ESMF on Perlmutter')
-                env.set("ESMF_NETCDF", "split")
-                env.set("ESMF_NETCDF_LIBPATH", spec["netcdf-c"].prefix.lib)
-                env.set("ESMF_NETCDF_INCLUDE", spec["netcdf-c"].prefix.include)
-            elif os.environ.get("HOST", "").startswith("ch-fe"):
-                # nc-config and nf-config don't have the right --libs and
-                # --flibs
-                print('Installing ESMF on Chicoma')
-                env.set("ESMF_NETCDF", "split")
-                env.set("ESMF_NETCDF_LIBPATH", spec["netcdf-c"].prefix.lib)
-                env.set("ESMF_NETCDF_INCLUDE", spec["netcdf-c"].prefix.include)
-            elif os.environ.get("LMOD_SYSTEM_NAME", "") == "frontier":
-                # nc-config and nf-config don't have the right --libs and
-                # --flibs
-                print('Installing ESMF on Frontier')
-                env.set("ESMF_NETCDF", "split")
-                env.set("ESMF_NETCDF_LIBPATH", spec["netcdf-c"].prefix.lib)
-                env.set("ESMF_NETCDF_INCLUDE", spec["netcdf-c"].prefix.include)
-            else:
-                # ESMF provides the ability to read Grid and Mesh data in
-                # NetCDF format.
-                env.set("ESMF_NETCDF", "nc-config")
-                env.set("ESMF_NFCONFIG", "nf-config")
-                netcdfc = spec["netcdf-c"]
-                if netcdfc.satisfies("~shared"):
-                    nc_config = which(os.path.join(netcdfc.prefix.bin, "nc-config"))
-                    nc_flags = nc_config("--static", "--libs", output=str).strip()
-                    env.set("ESMF_NETCDF_LIBS", nc_flags)
+            # don't rely on nc-config and nf-config, as --libs adn --flibs
+            # are not reliable on too many machines
+            env.set("ESMF_NETCDF", "split")
+            env.set("ESMF_NETCDF_LIBPATH", spec["netcdf-c"].prefix.lib)
+            env.set("ESMF_NETCDF_INCLUDE", spec["netcdf-c"].prefix.include)
 
         ###################
         # Parallel-NetCDF #
