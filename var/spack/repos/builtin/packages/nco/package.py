@@ -15,6 +15,9 @@ class Nco(AutotoolsPackage):
 
     license("BSD-3-Clause")
 
+    version("5.2.7", sha256="fb463905b9c451cf9bd5a9c2259cdff054224cea3ef449145495cdeb966f06af")
+    version("5.2.6", sha256="31245c56c031eee14e32d77b56fcc291785e407ed9534a62c2f1f8320eb317af")
+    # skipping 5.2.5, see https://github.com/nco/nco/releases/tag/5.2.6
     version("5.2.4", sha256="44efa9151825487fa0562fa5c6d68837624059a8e2da9d15c83ceb4d498f7902")
     version("5.2.3", sha256="178ad32448067c72dc82b71ffc8b39add1252637cf6f9e23982ba1484920ca44")
     version("5.2.2", sha256="3908ce21dc7fd3be5f7fa4fe72bd96b69e6608bd246e6c1a504879ed6c7acfda")
