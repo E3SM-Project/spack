@@ -41,6 +41,10 @@ class Albany(CMakePackage):
             description="Enable SFad build")
     variant("sandybridge", default=False,
             description="Compile Trilinos used by Albany for Sandybridge architecture")
+    variant("zen3", default=False,
+            description="Compile Trilinos used by Albany for Zen3 architecture")
+    variant("ampere80", default=False,
+            description="Compile Trilinos used by Albany for Ampere80 architecture")
     variant("mpas",          default=False,
             description="Enable MPAS interface in build")
     variant("sfadsize", default="4", values=("4", "6", "8", "12", "24"), multi=False,
@@ -53,6 +57,10 @@ class Albany(CMakePackage):
             description="Enable packages needed for Albany optimization capabilities (SuperLU, FROSCh, ROL)"),
     variant("omegah",          default=False,
             description="Enable Omega_h in build")
+    variant("cuda", default=False,
+            description="Enable CUDA in build")
+    variant("uvm", default=False, when="+cuda",
+            description="Enable UVM for CUDA builds")
 
     # Add dependencies
     depends_on("mpi")
@@ -67,6 +75,11 @@ class Albany(CMakePackage):
 
     depends_on("trilinos-for-albany~superlu-dist+exodus+chaco~isorropia+tempus+teko~intrepid+intrepid2+minitensor+phalanx+pnetcdf+nox+piro+shards+stk+amesos2~amesos~hypre+ifpack2~mumps~suite-sparse~epetra~ifpack~ml+muelu~aztec+superlu+rol+frosch gotype=long_long", when="~sandybridge+optimization")
     depends_on("trilinos-for-albany~superlu-dist+exodus+chaco~isorropia+tempus+teko~intrepid+intrepid2+minitensor+phalanx+pnetcdf+nox+piro+shards+stk+amesos2~amesos~hypre+ifpack2~mumps~suite-sparse+sandybridge~epetra~ifpack~ml+muelu~aztec+superlu+rol+frosch gotype=long_long", when="+sandybridge+optimization")
+
+    depends_on("trilinos-for-albany+cuda+uvm", when="+uvm")
+    depends_on("trilinos-for-albany+cuda", when="+cuda~uvm")
+    depends_on("trilinos-for-albany+zen3", when="+zen3")
+    depends_on("trilinos-for-albany+ampere80", when="+ampere80")
 
     depends_on("trilinos-for-albany@develop", when="@develop")
     depends_on("trilinos-for-albany@compass-2023-08-03", when="@compass-2023-08-03")

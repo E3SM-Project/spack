@@ -79,6 +79,14 @@ class TrilinosForAlbany(CMakePackage):
             description='Compile with Fortran support')
     variant('openmp',       default=False,
             description='Enable OpenMP')
+    variant('cuda', default=False,
+            description='Enable CUDA')
+    variant("uvm", default=False, when="+cuda", 
+            description="Turn on UVM for CUDA build")
+    variant("aware", default=False, when="+cuda+tpetra",
+            description="Turn on Tpetra GPU-aware MPI for CUDA build")
+    variant("wrapper", default=False, 
+            description="Use nvcc-wrapper for CUDA build")
     variant('shared',       default=True,
             description='Enables the build of shared libraries')
     variant('debug',       default=False,
@@ -87,6 +95,10 @@ class TrilinosForAlbany(CMakePackage):
             description='Compile using the default xSDK configuration')
     variant('sandybridge', default=False,
             description='Compile Trilinos for Sandybridge architecture')
+    variant('zen3', default=False,
+            description='Compile Trilinos for Zen3 architecture')
+    variant('ampere80', default=False,
+            description='Compile Trilinos for Ampere80 architecture')
 
     # TPLs (alphabet order)
     variant('boost',        default=True,
@@ -314,6 +326,20 @@ class TrilinosForAlbany(CMakePackage):
     # ADIOS2 was only added after v12.14.1
     conflicts('+adios2', when='@:12.14.1')
     conflicts('+adios2', when='@xsdk-0.2.0')
+
+    # CUDA without wrapper requires clang
+    requires(
+        "%clang",
+        when="+cuda~wrapper",
+        msg="trilinos~wrapper+cuda can only be built with the Clang compiler",
+    )
+    conflicts("+wrapper", when="~cuda")
+    conflicts("+wrapper", when="%clang")
+    # Old trilinos fails with new CUDA (see #27180)
+    conflicts("@:13.0.1 +cuda", when="^cuda@11:")
+    # Cuda UVM must be enabled prior to 13.2
+    # See https://github.com/spack/spack/issues/28869
+    conflicts("~uvm", when="@:13.1 +cuda")
     # ###################### Dependencies ##########################
 
     # Everything should be compiled position independent (-fpic)
@@ -363,6 +389,7 @@ class TrilinosForAlbany(CMakePackage):
     depends_on('python', when='+python')
     depends_on('py-numpy', when='+python', type=('build', 'run'))
     depends_on('swig', when='+python')
+    depends_on("kokkos-nvcc-wrapper", when="+wrapper")
 
     patch('umfpack_from_suitesparse.patch', when='@11.14.1:12.8.1')
     patch('xlf_seacas.patch', when='@12.10.1:12.12.1 %xl')
@@ -379,6 +406,22 @@ class TrilinosForAlbany(CMakePackage):
     def setup_run_environment(self, env):
         if "+exodus" in self.spec:
             env.prepend_path("PYTHONPATH", self.prefix.lib)
+
+    def setup_dependent_package(self, module, dependent_spec):
+        if "+wrapper" in self.spec:
+            self.spec.kokkos_cxx = self.spec["kokkos-nvcc-wrapper"].kokkos_cxx
+        else:
+            self.spec.kokkos_cxx = spack_cxx
+
+    def setup_build_environment(self, env):
+        spec = self.spec
+        if "+cuda" in spec and "+wrapper" in spec:
+            if "+mpi" in spec:
+                env.set("OMPI_CXX", spec["kokkos-nvcc-wrapper"].kokkos_cxx)
+                env.set("MPICH_CXX", spec["kokkos-nvcc-wrapper"].kokkos_cxx)
+                env.set("MPICXX_CXX", spec["kokkos-nvcc-wrapper"].kokkos_cxx)
+            else:
+                env.set("CXX", spec["kokkos-nvcc-wrapper"].kokkos_cxx)
 
     def cmake_args(self):
         spec = self.spec
@@ -400,6 +443,10 @@ class TrilinosForAlbany(CMakePackage):
                 'ON' if '+debug' in spec else 'OFF'),
             '-DKokkos_ARCH_SNB:BOOL=%s' % (
                 'ON' if '+sandybridge' in spec else 'OFF'),
+            '-DKokkos_ARCH_ZEN3:BOOL=%s' % (
+                'ON' if '+zen3' in spec else 'OFF'),
+            '-DKokkos_ARCH_AMPERE80:BOOL=%s' % (
+                'ON' if '+ampere80' in spec else 'OFF'),
 
             # The following can cause problems on systems that don't have
             # static libraries available for things like dl and pthreads
@@ -757,6 +804,21 @@ class TrilinosForAlbany(CMakePackage):
             if '+tpetra' in spec:
                 options.extend([
                     '-DTpetra_INST_OPENMP:BOOL=ON'
+                ])
+
+        # CUDA
+        if '+cuda' in spec:
+            options.extend([
+                '-DKokkos_ENABLE_CUDA:BOOL=ON',
+                '-DKokkos_ENABLE_CUDA_LAMBDA:BOOL=ON',
+                '-DKokkos_ENABLE_CUDA_UVM:BOOL=%s' % 'ON' if '+uvm' in spec else 'OFF',
+                '-DKokkos_ENABLE_IMPL_CUDA_MALLOC_ASYNC:BOOL=OFF',
+                '-DTPL_ENABLE_CUDA:BOOL=ON',
+                '-DTPL_ENABLE_CUSPARSE:BOOL=OFF'
+            ])
+            if '+tpetra' in spec:
+                options.extend([
+                    '-DTpetra_ASSUME_CUDA_AWARE_MPI:BOOL=%s' % 'ON' if '+aware' in spec else 'OFF'
                 ])
 
         # Fortran lib
