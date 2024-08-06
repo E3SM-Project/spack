@@ -61,6 +61,8 @@ class Albany(CMakePackage):
             description="Enable CUDA in build")
     variant("uvm", default=False, when="+cuda",
             description="Enable UVM for CUDA builds")
+    variant("slfad", default=False,
+            description="Enable SLFad build")
 
     # Add dependencies
     depends_on("mpi")
@@ -124,8 +126,6 @@ class Albany(CMakePackage):
                            "ON" if "+perf" in spec else "OFF"),
                        "-DENABLE_64BIT_INT:BOOL=%s" % (
                            "ON" if "+64bit" in spec else "OFF"),
-                       "-DENABLE_FAD_TYPE:STRING=%s" % (
-                           "SFad" if "+sfad" in spec else "DFad"),
                        "-DENABLE_MPAS_INTERFACE:BOOL=%s" % (
                            "ON" if "+mpas" in spec else "OFF"),
                        "-DENABLE_ALBANY_PYTHON:BOOL=%s" % (
@@ -142,8 +142,22 @@ class Albany(CMakePackage):
 
         if "+sfad" in spec:
           options.extend([
+            "-DENABLE_FAD_TYPE:STRING=SFad",
             "-DALBANY_SFAD_SIZE=%d" % int(spec.variants["sfadsize"].value)
                        ])
+        elif "+slfad" in spec:
+          options.extend([
+            "-DENABLE_FAD_TYPE:STRING=SLFad",
+            "-DENABLE_TAN_FAD_TYPE:STRING=SLFad",
+            "-DENABLE_HES_VEC_FAD_TYPE:STRING=SLFad",
+            "-DALBANY_SLFAD_SIZE=90",
+            "-DALBANY_TAN_SLFAD_SIZE=100",
+            "-DALBANY_HES_VEC_SLFAD_SIZE=100"
+                       ])
+        else:
+          options.extend([
+            "-DENABLE_FAD_TYPE:STRING=DFad"])
+
         if "+debug" in spec:
           options.extend([
             "-DCMAKE_BUILD_TYPE:STRING=DEBUG"
