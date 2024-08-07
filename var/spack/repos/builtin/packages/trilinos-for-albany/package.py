@@ -814,11 +814,12 @@ class TrilinosForAlbany(CMakePackage):
                 '-DKokkos_ENABLE_CUDA_UVM:BOOL=%s' % 'ON' if '+uvm' in spec else 'OFF',
                 '-DKokkos_ENABLE_IMPL_CUDA_MALLOC_ASYNC:BOOL=OFF',
                 '-DTPL_ENABLE_CUDA:BOOL=ON',
-                '-DTPL_ENABLE_CUSPARSE:BOOL=OFF'
+                '-DTPL_ENABLE_CUSPARSE:BOOL=OFF',
+                '-DTPL_ENABLE_THRUST:BOOL=ON'
             ])
             if '+tpetra' in spec:
                 options.extend([
-                    '-DTpetra_ASSUME_CUDA_AWARE_MPI:BOOL=%s' % 'ON' if '+aware' in spec else 'OFF'
+                    '-DTpetra_ASSUME_GPU_AWARE_MPI:BOOL=%s' % 'ON' if '+aware' in spec else 'OFF'
                 ])
 
         # Fortran lib
