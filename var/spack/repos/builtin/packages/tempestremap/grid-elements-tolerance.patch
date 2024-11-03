@@ -1,0 +1,12 @@
+diff -ruN tempestremap-2.2.0/src/GridElements.cpp tempestremap-2.2.0-patch/src/GridElements.cpp
+--- tempestremap-2.2.0/src/GridElements.cpp	2023-06-14 11:34:02.000000000 -0600
++++ tempestremap-2.2.0-patch/src/GridElements.cpp	2024-11-03 09:37:36.140268861 -0700
+@@ -1727,7 +1727,7 @@
+ 
+ #endif
+ */
+-			if (dDot > 0.0) {
++			if (dDot > ReferenceTolerance) {
+ 				printf("\nError detected (orientation):\n");
+ 				printf("  Face %i, Edge %i, Orientation %1.5e\n",
+ 					i, j, dDot);

@@ -46,6 +46,10 @@ class Tempestremap(AutotoolsPackage):
     depends_on("blas")
     depends_on("lapack")
 
+    # Relax tolerance for valid grid elements, needed by high resolution meshes
+    # in mptempest
+    patch("grid-elements-tolerance.patch", when="@2.2.0")
+
     def configure_args(self):
         spec = self.spec
         options = []
