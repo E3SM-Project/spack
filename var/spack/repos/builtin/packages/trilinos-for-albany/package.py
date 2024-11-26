@@ -505,7 +505,7 @@ class TrilinosForAlbany(CMakePackage):
                 'ON' if '+isorropia' in spec else 'OFF'),
             '-DTrilinos_ENABLE_Kokkos:BOOL=%s' % (
                 'ON' if '+kokkos' in spec else 'OFF'),
-            '-DKOKKOS_ENABLE_LIBDL:BOOL=%s' % (
+            '-DKokkos_ENABLE_LIBDL:BOOL=%s' % (
                 'ON' if '+kokkos' in spec else 'OFF'),
             '-DTrilinos_ENABLE_MiniTensor=%s' % (
                 'ON' if '+minitensor' in spec else 'OFF'),
