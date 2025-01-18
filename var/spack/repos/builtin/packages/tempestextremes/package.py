@@ -42,7 +42,8 @@ class Tempestextremes(MakefilePackage):
     depends_on('mpi', when='+mpi')
 
     # Make sure not to use special make configurations for specific systems
-    patch('system.patch')
+    patch("system_2.2.2.patch", when="@:2.2.2")
+    patch("system_2.2.3.patch", when="@2.2.3:")
 
     parallel = False
 
