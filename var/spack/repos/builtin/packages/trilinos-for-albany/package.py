@@ -339,9 +339,10 @@ class TrilinosForAlbany(CMakePackage):
     conflicts("+wrapper", when="%clang")
     # Old trilinos fails with new CUDA (see #27180)
     conflicts("@:13.0.1 +cuda", when="^cuda@11:")
-    # Cuda UVM must be enabled prior to 13.2
+    # Older numbered Trilinos releases require CUDA UVM.
     # See https://github.com/spack/spack/issues/28869
-    conflicts("~uvm", when="@:13.1 +cuda")
+    # Do not apply this to Compass-tagged releases, which are effectively newer.
+    conflicts("~uvm", when="@11.14.1:12.18.1 +cuda")
     # ###################### Dependencies ##########################
 
     # Everything should be compiled position independent (-fpic)
@@ -811,10 +812,18 @@ class TrilinosForAlbany(CMakePackage):
 
         # CUDA
         if '+cuda' in spec:
+            # Compass-tagged releases are effectively much newer Trilinos and should
+            # not enable the deprecated Kokkos CUDA UVM path by default.
+            uvm_enabled = '+uvm' in spec
+            if spec.satisfies('@compass-2026-02-06:'):
+                uvm_enabled = False
+
             options.extend([
                 '-DKokkos_ENABLE_CUDA:BOOL=ON',
                 '-DKokkos_ENABLE_CUDA_LAMBDA:BOOL=ON',
-                '-DKokkos_ENABLE_CUDA_UVM:BOOL=%s' % 'ON' if '+uvm' in spec else 'OFF',
+                '-DKokkos_ENABLE_CUDA_UVM:BOOL={0}'.format(
+                    'ON' if uvm_enabled else 'OFF'
+                ),
                 '-DKokkos_ENABLE_IMPL_CUDA_MALLOC_ASYNC:BOOL=OFF',
                 '-DTPL_ENABLE_CUDA:BOOL=ON',
                 '-DTPL_ENABLE_CUSPARSE:BOOL=OFF',
@@ -822,7 +831,9 @@ class TrilinosForAlbany(CMakePackage):
             ])
             if '+tpetra' in spec:
                 options.extend([
-                    '-DTpetra_ASSUME_GPU_AWARE_MPI:BOOL=%s' % 'ON' if '+aware' in spec else 'OFF'
+                    '-DTpetra_ASSUME_GPU_AWARE_MPI:BOOL={0}'.format(
+                        'ON' if '+aware' in spec else 'OFF'
+                    )
                 ])
 
         # Fortran lib
