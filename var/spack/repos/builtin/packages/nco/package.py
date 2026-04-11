@@ -14,6 +14,7 @@ class Nco(AutotoolsPackage):
     url = "https://github.com/nco/nco/archive/5.0.1.tar.gz"
 
     license("BSD-3-Clause")
+    version("5.3.8", sha256="f23b0b95525473d305ab15b96266d1458e3dfa193b9ee701af826913602d473d")
     version("5.3.7", sha256="f1103219bfddd838b80a326793c165a17f21ec612c9520342e34d556a6d012e5")
     version("5.3.6", sha256="70d64f461a0d5262274495ee1a9d85735aa3115281fdf01df4f946a919f9f6ae")
     version("5.3.5", sha256="f2373b68279ff48b5cacf431f6a9f459bae75dc58d76f74cbff0834938aa6224")
