@@ -250,6 +250,43 @@ class MakefileBuilder(spack.build_systems.makefile.MakefileBuilder):
                 )
         elif self.pkg.compiler.name == "intel" or self.pkg.compiler.name == "oneapi":
             env.set("ESMF_COMPILER", "intel")
+            # With oneAPI (icpx/ifx), ifx's -cxxlib resolves libstdc++ from the
+            # system GCC (8.x on RHEL8, GLIBCXX up to 3.4.25) rather than from the
+            # GCC toolchain configured in the compiler's .cfg files (GCC 11.x here).
+            # ESMF's F90 app link step uses ESMF_F90LINKPATHS for -L flags, so adding
+            # the GCC toolchain's lib64 there ensures the right libstdc++ is found.
+            if self.pkg.compiler.name == "oneapi":
+                import re
+
+                gcc_lib64 = None
+                cxx = self.pkg.compiler.cxx
+                cfg_file = cxx + ".cfg"
+                if os.path.exists(cfg_file):
+                    with open(cfg_file) as f:
+                        content = f.read()
+                    m = re.search(r"--gcc-toolchain=(\S+)", content)
+                    if m:
+                        gcc_toolchain = m.group(1)
+                        lib64 = os.path.join(gcc_toolchain, "lib64")
+                        if os.path.exists(lib64):
+                            gcc_lib64 = lib64
+                if gcc_lib64 is None:
+                    try:
+                        import subprocess
+
+                        result = subprocess.run(
+                            [cxx, "--print-file-name=libstdc++.so"],
+                            capture_output=True,
+                            text=True,
+                            check=True,
+                        )
+                        libstdcxx_path = os.path.realpath(result.stdout.strip())
+                        if os.path.isabs(libstdcxx_path):
+                            gcc_lib64 = os.path.dirname(libstdcxx_path)
+                    except Exception:
+                        pass
+                if gcc_lib64:
+                    env.set("ESMF_F90LINKPATHS", "-L%s" % gcc_lib64)
         elif self.pkg.compiler.name in ["clang", "apple-clang"]:
             env.set("ESMF_COMPILER", "gfortranclang")
             with self.pkg.compiler.compiler_environment():
