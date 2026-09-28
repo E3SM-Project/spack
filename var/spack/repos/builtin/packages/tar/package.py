@@ -52,6 +52,9 @@ class Tar(AutotoolsPackage, GNUMirrorPackage):
     patch("se-selinux.patch", when="@:1.29")
     patch("argp-pgi.patch", when="@:1.29")
     patch("gnutar-configure-xattrs.patch", when="@1.28")
+    # Newer libacl (2.3.2+) declares acl_get_file_at & friends in <sys/acl.h>,
+    # clashing with tar's static helpers of the same name (backport from upstream spack).
+    patch("tar-1.34-avoid-acl-prefix.patch", when="@1.34")
     # The NVIDIA compilers do not currently support some GNU builtins.
     # Detect this case and use the fallback path.
     patch("nvhpc-1.30.patch", when="@1.30:1.32 %nvhpc")
