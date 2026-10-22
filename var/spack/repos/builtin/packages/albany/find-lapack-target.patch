@@ -1,0 +1,6 @@
+--- a/CMakeLists.txt
++++ b/CMakeLists.txt
+@@ -66,1 +66,3 @@
++# STK's exported targets reference LAPACK::LAPACK.
++find_package(LAPACK REQUIRED)
+ find_package(Trilinos 17.0 REQUIRED)

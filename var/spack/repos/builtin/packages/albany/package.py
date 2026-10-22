@@ -24,6 +24,9 @@ class Albany(CMakePackage):
     version('compass-2023-08-03', tag='compass-2023-08-03')
     version("develop", branch="master")
 
+    # STKTransferUtil exports a dependency on LAPACK::LAPACK.
+    patch("find-lapack-target.patch", when="@compass-2026-03-21")
+
     depends_on("cxx", type="build")  # generated
 
     variant("debug",          default=False,
